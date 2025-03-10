@@ -1,19 +1,19 @@
 name: medibound_ui
 description: A collection of customizable graph widgets for FlutterFlow and Flutter.
-version: 1.0.1
+version: 1.0.3
 homepage: https://medibound.com
 repository: https://github.com/medibound/medibound_ui
 issue_tracker: https://github.com/medibound/medibound_ui/issues
 
 environment:
-  sdk: "3.7.0-209.1.beta"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^6.2.1
+  google_fonts: ^6.1.0
   intl: ^0.18.1
-  shared_preferences: ^2.5.2
+  shared_preferences: ^2.3.2
   syncfusion_flutter_charts: ^28.2.9
 
 dev_dependencies:
