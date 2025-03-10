@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../components/theme.dart';
+//import '../../components/theme.dart';
 
 
 class QuarterSize extends StatelessWidget {
@@ -15,7 +15,7 @@ class QuarterSize extends StatelessWidget {
       width: 100,
       padding: const EdgeInsets.all(7.5),
       decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).primaryBackground,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
       ),
       child: child,

@@ -78,6 +78,7 @@ abstract class GraphWidget extends StatelessWidget {
       primaryYAxis: NumericAxis(
         isVisible: false,
         maximum: maxY,
+        plotOffsetEnd: maxY*0.02,
         majorGridLines: const MajorGridLines(width: 0),
       ),
       plotAreaBorderWidth: 0,
