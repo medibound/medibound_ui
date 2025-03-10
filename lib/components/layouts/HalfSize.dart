@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medibound_ui/components/theme.dart';
 
 class HalfSize extends StatelessWidget {
   final Widget child;
@@ -15,7 +16,7 @@ class HalfSize extends StatelessWidget {
       width: 210,  // Fixed width
       padding: const EdgeInsets.all(7.5),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: FlutterFlowTheme.of(context).secondaryBackground,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

@@ -59,6 +59,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+        print(Theme.of(context).brightness);
+
     final Map<String, dynamic> mockVariable = {
       "icon": {
         "displayName": "",
