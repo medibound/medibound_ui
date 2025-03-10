@@ -6,12 +6,14 @@ import '../graph_widget.dart';
 class LineGraph extends GraphWidget {
   const LineGraph({
     super.key,
+    required BuildContext context,
     required Map<String, dynamic> variable,
     required Color color,
     required TimeWindow timeWindow,
     required TickerType tickerType,
     required GraphSize graphSize,
   }) : super(
+          context: context,
           timeWindow: timeWindow,
           tickerType: tickerType,
           graphSize: graphSize,

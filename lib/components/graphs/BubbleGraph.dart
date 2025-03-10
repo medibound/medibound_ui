@@ -6,12 +6,14 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class BubbleGraph extends GraphWidget {
   const BubbleGraph({
     super.key,
+    required BuildContext context,
     required Map<String, dynamic> variable,
     required Color color,
     required TimeWindow timeWindow,
     required TickerType tickerType,
     required GraphSize graphSize,
   }) : super(
+          context: context,
           timeWindow: timeWindow,
           tickerType: tickerType,
           graphSize: graphSize,

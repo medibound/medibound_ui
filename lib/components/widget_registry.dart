@@ -11,34 +11,34 @@ import '../components/graphs/StackedColumnGraph.dart';
 import '../components/graphs/StepLineGraph.dart';
 
 typedef GraphBuilderFunction = GraphWidget Function(
-    Map<String, dynamic> variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize);
+    BuildContext context, Map<String, dynamic> variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize);
 
 final Map<String, GraphBuilderFunction> widgetRegistry = {
-  "Column": (variable, color, timeWindow, tickerType, graphSize) => ColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "Line": (variable, color, timeWindow, tickerType, graphSize) => LineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "Scatter": (variable, color, timeWindow, tickerType, graphSize) => ScatterGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "StepLine": (variable, color, timeWindow, tickerType, graphSize) => StepLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "FastLine": (variable, color, timeWindow, tickerType, graphSize) => FastLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  //"Histogram": (variable, color, timeWindow, tickerType, graphSize) => HistogramGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "Bubble": (variable, color, timeWindow, tickerType, graphSize) => BubbleGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  //"StackedBar": (variable, color, timeWindow, tickerType, graphSize) => StackedBarGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "StackedColumn": (variable, color, timeWindow, tickerType, graphSize) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
-  "CandleStick": (variable, color, timeWindow, tickerType, graphSize) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "Column": (context, variable, color, timeWindow, tickerType, graphSize) => ColumnGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "Line": (context, variable, color, timeWindow, tickerType, graphSize) => LineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "Scatter": (context, variable, color, timeWindow, tickerType, graphSize) => ScatterGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "StepLine": (context, variable, color, timeWindow, tickerType, graphSize) => StepLineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "FastLine": (context, variable, color, timeWindow, tickerType, graphSize) => FastLineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  //"Histogram": (context, variable, color, timeWindow, tickerType, graphSize) => HistogramGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "Bubble": (context, variable, color, timeWindow, tickerType, graphSize) => BubbleGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  //"StackedBar": (context, variable, color, timeWindow, tickerType, graphSize) => StackedBarGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "StackedColumn": (context, variable, color, timeWindow, tickerType, graphSize) => StackedColumnGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
+  "CandleStick": (context, variable, color, timeWindow, tickerType, graphSize) => CandleStickGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize),
 };
 
-Widget getWidget(String widgetType, dynamic variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize) {
-  return widgetRegistry[widgetType]?.call(variable, color, timeWindow, tickerType, graphSize) ?? const SizedBox(); // Default to empty if not found
+Widget getWidget(String widgetType, BuildContext context, dynamic variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize) {
+  return widgetRegistry[widgetType]?.call(context, variable, color, timeWindow, tickerType, graphSize) ?? const SizedBox(); // Default to empty if not found
 }
 
-List<Widget> getWidgetList(dynamic variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize) {
+List<Widget> getWidgetList(BuildContext context, dynamic variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize) {
   return widgetRegistry.values
-      .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize))
+      .map((builder) => builder(context, variable, color, timeWindow, tickerType, graphSize))
       .toList();
 }
 
-Map<String, dynamic> toJSON() {
+Map<String, dynamic> toJSON(BuildContext context) {
   return widgetRegistry.map((name, builder) {
-    final GraphWidget graph = builder({}, Colors.blue, TimeWindow.auto, TickerType.last, GraphSize.half); // ✅ Ensure proper casting
+    final GraphWidget graph = builder(context, {}, Colors.blue, TimeWindow.auto, TickerType.last, GraphSize.half); // ✅ Ensure proper casting
   
     return MapEntry(name, {
       "name": name,

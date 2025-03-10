@@ -1,16 +1,42 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:medibound_ui/components/utils/IconsFT.dart';
 import 'graph_types.dart';
 
 class ProcessedGraphData {
   final List<ChartData> chartData;
+  final String unit;
+  final dynamic info;
+  final TimeWindow newWindow;
   final double maxY;
   final int interval;
 
-  ProcessedGraphData({required this.chartData, required this.maxY, required this.interval});
+  ProcessedGraphData({required this.chartData, required this.maxY, required this.interval, required this.newWindow, required this.unit, required this.info});
+}
+
+TimeWindow getAutoWindow(TimeWindow timeWindow, List<PointData> parsedPoints) {
+  TimeWindow selectedWindow = timeWindow;
+  final DateTime now = DateTime.now();
+
+  if (timeWindow == TimeWindow.auto && parsedPoints.isNotEmpty) {
+    final Duration dataRange = now.difference(parsedPoints.last.timestamp);
+    if (dataRange.inMinutes <= 1) selectedWindow = TimeWindow.lastMinute;
+    else if (dataRange.inMinutes <= 15) selectedWindow = TimeWindow.last15Minutes;
+    else if (dataRange.inMinutes <= 60) selectedWindow = TimeWindow.lastHour;
+    else if (dataRange.inHours <= 24) selectedWindow = TimeWindow.last24Hours;
+    else if (dataRange.inDays <= 7) selectedWindow = TimeWindow.last7Days;
+    else if (dataRange.inDays <= 30) selectedWindow = TimeWindow.last30Days;
+    else if (dataRange.inDays <= 365) selectedWindow = TimeWindow.pastYear;
+    else selectedWindow = TimeWindow.none;
+  }
+
+  return selectedWindow;
 }
 
 ProcessedGraphData processGraphData(Map<String, dynamic> variable, TimeWindow timeWindow) {
   final List<dynamic> points = variable["data"] ?? [];
+  final String unit = variable["unit"] ?? "";
+  final dynamic info = variable["info"] ?? {};
   final DateTime now = DateTime.now();
 
   final List<PointData> parsedPoints = points.map<PointData>((data) {
@@ -27,19 +53,7 @@ ProcessedGraphData processGraphData(Map<String, dynamic> variable, TimeWindow ti
   Duration bucketInterval = Duration.zero;
   int numBuckets = 0;
   int interval = 1;
-  TimeWindow selectedWindow = timeWindow;
-
-  if (timeWindow == TimeWindow.auto && parsedPoints.isNotEmpty) {
-    final Duration dataRange = now.difference(parsedPoints.last.timestamp);
-    if (dataRange.inMinutes <= 1) selectedWindow = TimeWindow.lastMinute;
-    else if (dataRange.inMinutes <= 15) selectedWindow = TimeWindow.last15Minutes;
-    else if (dataRange.inMinutes <= 60) selectedWindow = TimeWindow.lastHour;
-    else if (dataRange.inHours <= 24) selectedWindow = TimeWindow.last24Hours;
-    else if (dataRange.inDays <= 7) selectedWindow = TimeWindow.last7Days;
-    else if (dataRange.inDays <= 30) selectedWindow = TimeWindow.last30Days;
-    else if (dataRange.inDays <= 365) selectedWindow = TimeWindow.pastYear;
-    else selectedWindow = TimeWindow.none;
-  }
+  TimeWindow selectedWindow = getAutoWindow(timeWindow, parsedPoints);
 
   switch (selectedWindow) {
     case TimeWindow.lastMinute:
@@ -126,5 +140,5 @@ ProcessedGraphData processGraphData(Map<String, dynamic> variable, TimeWindow ti
   final List<ChartData> chartData = aggregatedData.entries.map((entry) => ChartData(entry.key, entry.value)).toList();
   double maxY = chartData.map((data) => data.y).reduce((a, b) => a > b ? a : b);
 
-  return ProcessedGraphData(chartData: chartData, maxY: maxY, interval: interval);
+  return ProcessedGraphData(chartData: chartData, maxY: maxY, interval: interval, newWindow: selectedWindow, unit: unit, info: info);
 }

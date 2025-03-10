@@ -4,7 +4,7 @@ import '../components/layouts/QuarterSize.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'graph_types.dart';
 import 'graph_data_processing.dart';
-import '../components/tickers/LastTicker.dart';
+import 'ticker_data_processing.dart';
 
 abstract class GraphWidget extends StatelessWidget {
   final TimeWindow timeWindow;
@@ -12,6 +12,7 @@ abstract class GraphWidget extends StatelessWidget {
   final TickerType tickerType;
   final Map<String, dynamic> variable;
   final Color color;
+  final BuildContext context;
 
   /// Defines constraints for each graph type
   final List<GraphSize> allowedSizes;
@@ -20,6 +21,7 @@ abstract class GraphWidget extends StatelessWidget {
 
   const GraphWidget({
     super.key,
+    required this.context,
     required this.graphSize,
     required this.tickerType,
     required this.timeWindow,
@@ -35,22 +37,22 @@ abstract class GraphWidget extends StatelessWidget {
     return buildSize(context);
   }
 
-  Widget buildTicker(BuildContext context, List<ChartData> chartData) {
-    switch (tickerType) {
-      case TickerType.last:
-        return LastTicker(context: context, data: chartData);
-      default:
-        return const SizedBox.shrink();
-    }
+  Widget buildTicker(BuildContext context) {
+    final processedData = processGraphData(variable, timeWindow);
+    final List<ChartData> chartData = processedData.chartData;
+    final String unit = processedData.unit;
+    final TimeWindow newWindow = processedData.newWindow;
+    final dynamic info = processedData.info;
+
+    return ProcessedTickerData(context: context, data: chartData, tickerType: tickerType, timeWindow: newWindow, color: color, unit: unit, info: info);
   }
 
   Widget buildSize(BuildContext context) {
-    final processedData = processGraphData(variable, timeWindow);
-    final List<ChartData> chartData = processedData.chartData;
+    
 
     switch (graphSize) {
       case GraphSize.half:
-        return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context, chartData));
+        return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context));
       case GraphSize.quarter:
         return QuarterSize(context: context, child: buildGraph(context));
       default:

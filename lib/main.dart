@@ -59,16 +59,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-        print(Theme.of(context).brightness);
+    print(Theme.of(context).brightness);
 
     final Map<String, dynamic> mockVariable = {
-      "icon": {
-        "displayName": "",
+      "info": {
+        "displayName": "Heart Rate",
         "code": "",
         "description": "",
         "color": "",
-        "icon": ""
+        "icon": "favorite_rounded"
       },
+      "unit": "m",
       "data": [
         {
           "number": 35.0,
@@ -151,9 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     };
 
-    print(toJSON());
-
-
+    print(toJSON(context));
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -169,17 +168,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           child: ListView(
             shrinkWrap: true,
-
             children: [
               Column(
                 spacing: 10,
-                children: getWidgetList(
-                  mockVariable,
-                  Colors.blue,
-                  TimeWindow.auto,
-                  TickerType.last,
-                  GraphSize.half
-                ),
+                children: getWidgetList(context, mockVariable, Colors.blue,
+                    TimeWindow.auto, TickerType.std, GraphSize.half),
               ),
             ],
           ),

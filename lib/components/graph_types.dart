@@ -33,4 +33,4 @@ enum VariableType { number, string }
 /// Determines if graph accepts a single value or an array
 enum VariableForm { singleton, array }
 
-enum TickerType { last, first, mean, std, sum}
+enum TickerType { last, first, mean, std, min, max, sum}
