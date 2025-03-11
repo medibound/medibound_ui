@@ -61,98 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     print(Theme.of(context).brightness);
 
-    final Map<String, dynamic> mockVariable = {
-      "info": {
-        "displayName": "Heart Rate",
-        "code": "",
-        "description": "",
-        "color": "",
-        "icon": "favorite_rounded"
-      },
-      "unit": "m",
-      "data": [
-        {
-          "number": 35.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 37)).toIso8601String(),
-        },
-        {
-          "number": 90.0,
-          "string": "E",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 45)).toIso8601String(),
-        },
-        {
-          "number": 5.0,
-          "string": "A",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 40)).toIso8601String(),
-        },
-        {
-          "number": 15.0,
-          "string": "B",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 50)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "C",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 55)).toIso8601String(),
-        },
-        {
-          "number": 135.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 59)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 59)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "A",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 50)).toIso8601String(),
-        },
-        {
-          "number": 15.0,
-          "string": "B",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 40)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "C",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 30)).toIso8601String(),
-        },
-        {
-          "number": 35.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 20)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 10)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
-        },
-      ],
-    };
+    
 
-    print(toJSON(context));
+    print(getWidgetList(context, Colors.blue, TimeWindow.auto, TickerType.last, GraphSize.half,height: 20.0));
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -171,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Column(
                 spacing: 10,
-                children: getWidgetList(context, mockVariable, Colors.blue,
-                    TimeWindow.auto, TickerType.std, GraphSize.half),
+                children: getWidgetList(context, Colors.blue,
+                    TimeWindow.auto, TickerType.std, GraphSize.half, height: 125.0),
               ),
             ],
           ),

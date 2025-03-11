@@ -53,7 +53,7 @@ class StaticTicker extends StatelessWidget {
                   Text(info["displayName"] ?? "Person",
                       style: FlutterFlowTheme.of(context)
                           .titleSmall
-                          .copyWith(height: .9, fontSize: 14)),
+                          .copyWith(height: .9, fontSize: 12)),
                   Row(
                     children: [
                       Text(

@@ -13,6 +13,7 @@ class CandleStickGraph extends GraphWidget {
     required TimeWindow timeWindow,
     required TickerType tickerType,
     required GraphSize graphSize,
+    required double height
   }) : super(
           context: context,
           timeWindow: timeWindow,
@@ -20,6 +21,7 @@ class CandleStickGraph extends GraphWidget {
           graphSize: graphSize,
           variable: variable,
           color: color,
+          height: height,
           allowedSizes: const [GraphSize.half],
           allowedVariableTypes: const [VariableType.number],
           allowedVariableForms: const [VariableForm.array],

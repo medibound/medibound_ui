@@ -13,6 +13,7 @@ abstract class GraphWidget extends StatelessWidget {
   final Map<String, dynamic> variable;
   final Color color;
   final BuildContext context;
+  final double height;
 
   /// Defines constraints for each graph type
   final List<GraphSize> allowedSizes;
@@ -27,10 +28,12 @@ abstract class GraphWidget extends StatelessWidget {
     required this.timeWindow,
     required this.variable,
     required this.color,
+    required this.height,
     required this.allowedSizes,
     required this.allowedVariableTypes,
     required this.allowedVariableForms,
   });
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +55,11 @@ abstract class GraphWidget extends StatelessWidget {
 
     switch (graphSize) {
       case GraphSize.half:
-        return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context));
+        return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context), height: height);
       case GraphSize.quarter:
-        return QuarterSize(context: context, child: buildGraph(context));
+        return QuarterSize(context: context, child: buildGraph(context), height: height);
       default:
-        return QuarterSize(context: context, child: Text('No Size Selected'));
+        return QuarterSize(context: context, child: Text('No Size Selected'), height: height);
     }
   }
 
@@ -64,7 +67,7 @@ abstract class GraphWidget extends StatelessWidget {
     final processedData = processGraphData(variable, timeWindow);
     final List<ChartData> chartData = processedData.chartData;
     final double maxY = processedData.maxY;
-
+    
     return SfCartesianChart(
       primaryXAxis: CategoryAxis(
         labelPlacement: LabelPlacement.betweenTicks,
