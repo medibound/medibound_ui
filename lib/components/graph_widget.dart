@@ -7,22 +7,20 @@ import 'graph_data_processing.dart';
 import 'ticker_data_processing.dart';
 
 abstract class GraphWidget extends StatelessWidget {
-  final TimeWindow timeWindow;
-  final GraphSize graphSize;
-  final TickerType tickerType;
+  final MBTimeWindow timeWindow;
+  final MBGraphSize graphSize;
+  final MBTickerType tickerType;
   final Map<String, dynamic> variable;
   final Color color;
-  final BuildContext context;
   final double height;
 
   /// Defines constraints for each graph type
-  final List<GraphSize> allowedSizes;
-  final List<VariableType> allowedVariableTypes;
-  final List<VariableForm> allowedVariableForms;
+  final List<MBGraphSize> allowedSizes;
+  final List<MBVariableType> allowedVariableTypes;
+  final List<MBVariableForm> allowedVariableForms;
 
   const GraphWidget({
     super.key,
-    required this.context,
     required this.graphSize,
     required this.tickerType,
     required this.timeWindow,
@@ -44,7 +42,7 @@ abstract class GraphWidget extends StatelessWidget {
     final processedData = processGraphData(variable, timeWindow);
     final List<ChartData> chartData = processedData.chartData;
     final String unit = processedData.unit;
-    final TimeWindow newWindow = processedData.newWindow;
+    final MBTimeWindow newWindow = processedData.newWindow;
     final dynamic info = processedData.info;
 
     return ProcessedTickerData(context: context, data: chartData, tickerType: tickerType, timeWindow: newWindow, color: color, unit: unit, info: info);
@@ -54,9 +52,9 @@ abstract class GraphWidget extends StatelessWidget {
     
 
     switch (graphSize) {
-      case GraphSize.half:
+      case MBGraphSize.half:
         return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context), height: height);
-      case GraphSize.quarter:
+      case MBGraphSize.quarter:
         return QuarterSize(context: context, child: buildGraph(context), height: height);
       default:
         return QuarterSize(context: context, child: Text('No Size Selected'), height: height);
@@ -88,9 +86,9 @@ abstract class GraphWidget extends StatelessWidget {
       ),
       plotAreaBorderWidth: 0,
       margin: EdgeInsets.zero,
-      series: [buildSeries(chartData)],
+      series: [buildSeries(context, chartData)],
     );
   }
 
-  CartesianSeries<ChartData, String> buildSeries(List<ChartData> chartData);
+  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData);
 }

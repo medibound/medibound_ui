@@ -8,8 +8,8 @@ import 'dart:math' as math;
 class ProcessedTickerData extends StatelessWidget {
   final List<ChartData> data;
   final BuildContext context;
-  final TickerType tickerType;
-  final TimeWindow timeWindow;
+  final MBTickerType tickerType;
+  final MBTimeWindow timeWindow;
   final String unit;
   final dynamic info;
   final Color color;
@@ -28,19 +28,19 @@ class ProcessedTickerData extends StatelessWidget {
   Widget build(BuildContext context) {
     String timeWindowLabel() {
       switch (timeWindow) {
-        case TimeWindow.lastMinute:
+        case MBTimeWindow.lastMinute:
           return "Last 1 min";
-        case TimeWindow.last15Minutes:
+        case MBTimeWindow.last15Minutes:
           return "Last 15 min";
-        case TimeWindow.lastHour:
+        case MBTimeWindow.lastHour:
           return "Last Hour";
-        case TimeWindow.last24Hours:
+        case MBTimeWindow.last24Hours:
           return "Last 24h";
-        case TimeWindow.last7Days:
+        case MBTimeWindow.last7Days:
           return "Last 7 days";
-        case TimeWindow.last30Days:
+        case MBTimeWindow.last30Days:
           return "Last 30 days";
-        case TimeWindow.pastYear:
+        case MBTimeWindow.pastYear:
           return "Past Year";
         default:
           return "";
@@ -51,7 +51,7 @@ class ProcessedTickerData extends StatelessWidget {
     String type;
     // Ensure there is data
     switch (tickerType) {
-      case TickerType.mean:
+      case MBTickerType.mean:
         type = "Avg";
         value = data.map((e) => e.y).reduce((a, b) => a + b) / data.length;
         return StaticTicker(
@@ -65,7 +65,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.min:
+      case MBTickerType.min:
         type = "Min";
         value = data.map((e) => e.y).reduce((a, b) => a < b ? a : b);
         return StaticTicker(
@@ -79,7 +79,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.max:
+      case MBTickerType.max:
         type = "Max";
         value = data.map((e) => e.y).reduce((a, b) => a > b ? a : b);
         return StaticTicker(
@@ -93,7 +93,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.last:
+      case MBTickerType.last:
         type = "Latest";
         value = data.last.y;
         return TrendTicker(
@@ -107,7 +107,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.first:
+      case MBTickerType.first:
         type = "First";
         value = data.first.y;
         return TrendTicker(
@@ -121,7 +121,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.std:
+      case MBTickerType.std:
         type = "Var";
         double mean =
             data.map((e) => e.y).reduce((a, b) => a + b) / data.length;
@@ -141,7 +141,7 @@ class ProcessedTickerData extends StatelessWidget {
           type: type,
         );
 
-      case TickerType.sum:
+      case MBTickerType.sum:
         type = "Sum";
         value = data.map((e) => e.y).reduce((a, b) => a + b);
         return TrendTicker(

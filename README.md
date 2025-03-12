@@ -1,16 +1,22 @@
-# myapp
+# Medibound-UI
 
-A new Flutter project.
+A Flutter UI library designed for **visualizing medical data** with customizable charts and components.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+- 📊 **Custom Graphs**: Supports various graph types such as **Line, Scatter, CandleStick, Column, Stacked Column, Step Line, Bubble, Fast Line**.
+- 🎨 **Theming Support**: Customizable colors and styles using `FlutterFlowTheme`.
+- 📡 **Dynamic Data Handling**: Accepts real-time and historical medical data.
+- ⚡ **Optimized Performance**: Built using **Syncfusion Flutter Charts** for smooth rendering.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📦 Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Add the following to your project's `pubspec.yaml`:
+
+```yaml
+dependencies:
+  medibound_ui:
+    git:
+      url: https://github.com/medibound/medibound-ui.git

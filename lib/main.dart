@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     
 
-    print(getWidgetList(context, Colors.blue, TimeWindow.auto, TickerType.last, GraphSize.half,height: 20.0));
+    print(getWidgetListJson());
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -82,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Column(
                 spacing: 10,
-                children: getWidgetList(context, Colors.blue,
-                    TimeWindow.auto, TickerType.std, GraphSize.half, height: 125.0),
+                children: getWidgetList(Colors.blue,
+                    MBTimeWindow.auto, MBTickerType.std, MBGraphSize.half, height: 125.0),
               ),
             ],
           ),

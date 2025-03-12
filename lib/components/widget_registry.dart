@@ -11,7 +11,7 @@ import '../components/graphs/StackedColumnGraph.dart';
 import '../components/graphs/StepLineGraph.dart';
 
 typedef GraphBuilderFunction = GraphWidget Function(
-    BuildContext context, Map<String, dynamic> variable, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize, double height);
+     Map<String, dynamic> variable, Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, double height);
 
 Map<String, dynamic> mockVariable = { 
       "info": {
@@ -107,21 +107,20 @@ Map<String, dynamic> mockVariable = {
     };
 
 final Map<String, GraphBuilderFunction> widgetRegistry = {
-  "Column": (context, variable, color, timeWindow, tickerType, graphSize, height) => ColumnGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Line": (context, variable, color, timeWindow, tickerType, graphSize, height) => LineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Scatter": (context, variable, color, timeWindow, tickerType, graphSize, height) => ScatterGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "StepLine": (context, variable, color, timeWindow, tickerType, graphSize, height) => StepLineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "FastLine": (context, variable, color, timeWindow, tickerType, graphSize, height) => FastLineGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  //"Histogram": (context, variable, color, timeWindow, tickerType, graphSize, height) => HistogramGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Bubble": (context, variable, color, timeWindow, tickerType, graphSize, height) => BubbleGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  //"StackedBar": (context, variable, color, timeWindow, tickerType, graphSize, height) => StackedBarGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "StackedColumn": (context, variable, color, timeWindow, tickerType, graphSize, height) => StackedColumnGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "CandleStick": (context, variable, color, timeWindow, tickerType, graphSize, height) => CandleStickGraph(context: context, variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Column": (variable, color, timeWindow, tickerType, graphSize, height) => ColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Line": (variable, color, timeWindow, tickerType, graphSize, height) => LineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Scatter": (variable, color, timeWindow, tickerType, graphSize, height) => ScatterGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "StepLine": (variable, color, timeWindow, tickerType, graphSize, height) => StepLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "FastLine": (variable, color, timeWindow, tickerType, graphSize, height) => FastLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  //"Histogram": (variable, color, timeWindow, tickerType, graphSize, height) => HistogramGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Bubble": (variable, color, timeWindow, tickerType, graphSize, height) => BubbleGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  //"StackedBar": (variable, color, timeWindow, tickerType, graphSize, height) => StackedBarGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "StackedColumn": (variable, color, timeWindow, tickerType, graphSize, height) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "CandleStick": (variable, color, timeWindow, tickerType, graphSize, height) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
 };
 
 Widget getWidget(
   String widgetType,
-  BuildContext context,
   Color color,  // ✅ Changed to String // ✅ Changed to String
   String graphSizeStr,   // ✅ Changed to String
   {String timeWindowStr = 'auto', String tickerTypeStr = 'last', double height = 100, dynamic variable}
@@ -129,57 +128,57 @@ Widget getWidget(
   variable ??= mockVariable;
 
   // ✅ Convert Strings to Enums
-  TimeWindow? timeWindow = stringToTimeWindow(timeWindowStr);
-  TickerType? tickerType = stringToTickerType(tickerTypeStr);
-  GraphSize? graphSize = stringToGraphSize(graphSizeStr);
+  MBTimeWindow? timeWindow = stringToTimeWindow(timeWindowStr);
+  MBTickerType? tickerType = stringToTickerType(tickerTypeStr);
+  MBGraphSize? graphSize = stringToGraphSize(graphSizeStr);
 
   // ✅ Provide default values if conversion fails
-  timeWindow ??= TimeWindow.auto;
-  tickerType ??= TickerType.last;
-  graphSize ??= GraphSize.half;
+  timeWindow ??= MBTimeWindow.auto;
+  tickerType ??= MBTickerType.last;
+  graphSize ??= MBGraphSize.half;
 
   return widgetRegistry[widgetType]?.call(
-        context, variable, color, timeWindow, tickerType, graphSize, height) ??
+        variable, color, timeWindow, tickerType, graphSize, height) ??
       const SizedBox(); // Default to empty if not found
 }
 
-TimeWindow? stringToTimeWindow(String value) {
+MBTimeWindow? stringToTimeWindow(String value) {
   try {
-    return TimeWindow.values.firstWhere((e) => e.name == value);
+    return MBTimeWindow.values.firstWhere((e) => e.name == value);
   } catch (e) {
     return null;
   }
 }
 
-TickerType? stringToTickerType(String value) {
+MBTickerType? stringToTickerType(String value) {
   try {
-    return TickerType.values.firstWhere((e) => e.name == value);
+    return MBTickerType.values.firstWhere((e) => e.name == value);
   } catch (e) {
     return null;
   }
 }
 
-GraphSize? stringToGraphSize(String value) {
+MBGraphSize? stringToGraphSize(String value) {
   try {
-    return GraphSize.values.firstWhere((e) => e.name == value);
+    return MBGraphSize.values.firstWhere((e) => e.name == value);
   } catch (e) {
     return null;
   }
 }
 
 
-List<Widget> getWidgetList(BuildContext context, Color color, TimeWindow timeWindow, TickerType tickerType, GraphSize graphSize, {double height = 100, dynamic variable = null}) {
+List<Widget> getWidgetList(Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, {double height = 100, dynamic variable = null}) {
   variable ??= mockVariable; 
   
   return widgetRegistry.values
-      .map((builder) => builder(context, variable, color, timeWindow, tickerType, graphSize, height))
+      .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize, height))
       .toList();
 }
 
 
-Map<String, dynamic> getWidgetListJson(BuildContext context) {
+Map<String, dynamic> getWidgetListJson() {
   return widgetRegistry.map((name, builder) {
-    final GraphWidget graph = builder(context, {}, Colors.blue, TimeWindow.auto, TickerType.last, GraphSize.half, 100); // ✅ Ensure proper casting
+    final GraphWidget graph = builder({}, Colors.blue, MBTimeWindow.auto, MBTickerType.last, MBGraphSize.half, 100); // ✅ Ensure proper casting
   
     return MapEntry(name, {
       "name": name,

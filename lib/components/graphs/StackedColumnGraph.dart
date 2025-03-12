@@ -5,29 +5,27 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StackedColumnGraph extends GraphWidget {
   const StackedColumnGraph({
-    super.key,
-    required BuildContext context,
+     super.key,
     required Map<String, dynamic> variable,
     required Color color,
-    required TimeWindow timeWindow,
-    required TickerType tickerType,
-    required GraphSize graphSize,
+    required MBTimeWindow timeWindow,
+    required MBTickerType tickerType,
+    required MBGraphSize graphSize,
     required double height
   }) : super(
-          context: context,
           timeWindow: timeWindow,
           tickerType: tickerType,
           graphSize: graphSize,
           variable: variable,
           color: color,
           height: height,
-          allowedSizes: const [GraphSize.half],
-          allowedVariableTypes: const [VariableType.number],
-          allowedVariableForms: const [VariableForm.array],
+          allowedSizes: const [MBGraphSize.half],
+          allowedVariableTypes: const [MBVariableType.number],
+          allowedVariableForms: const [MBVariableForm.array],
         );
 
   @override
-  CartesianSeries<ChartData, String> buildSeries(List<ChartData> chartData) {
+  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
     return StackedColumnSeries<ChartData, String>(
       dataSource: chartData,
       xValueMapper: (ChartData data, _) => data.x,
