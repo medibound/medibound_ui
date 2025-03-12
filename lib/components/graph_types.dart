@@ -60,7 +60,7 @@ extension MBGraphSizeExtension on MBGraphSize {
 /// Variable types that graphs accept
 enum MBVariableType { number, string }
 
-extension MBVariableTypeExtension on MBTimeWindow {
+extension MBVariableTypeExtension on MBVariableType {
   static const Map<MBVariableType, String> _names = {
     MBVariableType.number: "Number",
     MBVariableType.string: "Label",
