@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../graph_types.dart';
+import '../../graph_types.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import '../graph_widget.dart';
+import '../../graph_widget.dart';
 
 class LineGraph extends GraphWidget {
   const LineGraph({

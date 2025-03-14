@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../components/graph_types.dart';
-import '../graph_widget.dart';
+import '../../graph_types.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../graph_widget.dart';
 
-class HistogramGraph extends GraphWidget {
-  const HistogramGraph({
+class ColumnGraph extends GraphWidget {
+  const ColumnGraph({
      super.key,
     required Map<String, dynamic> variable,
     required Color color,
@@ -26,12 +26,18 @@ class HistogramGraph extends GraphWidget {
 
   @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return HistogramSeries<ChartData, String>(
+    return ColumnSeries<ChartData, String>(
       dataSource: chartData,
-      yValueMapper: (ChartData data, _) => data.y, // ✅ Uses only `yValueMapper`
-      binInterval: 10.0, // ✅ Controls bin size
-      color: color,
-      dataLabelSettings: DataLabelSettings(isVisible: true), // ✅ Show labels
+      xValueMapper: (ChartData data, _) => data.x,
+      yValueMapper: (ChartData data, _) => data.y,
+      name: 'Values',
+      borderRadius: BorderRadius.circular(2.5),
+      gradient: LinearGradient(
+        colors: [color, color.withValues(alpha: 0.2)],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
     );
   }
+
 }

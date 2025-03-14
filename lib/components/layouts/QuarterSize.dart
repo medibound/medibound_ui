@@ -12,20 +12,21 @@ class QuarterSize extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedOverflowBox(
-      size: Size(height, height),
-      alignment: Alignment.center,
-      child: Transform.scale(
-        scale: (height / 100),
-        child: Container(
-      height: 100,
-      width: 100,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).secondaryBackground,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: child,
-    )));
+    return ClipRect( // ✅ Crops anything outside the container
+      child: SizedBox( // ✅ Allows content to be larger, but cropped by ClipRect
+        width: height,
+        height: height,
+        child: FittedBox(
+          child: Container(
+        height: 100,
+        width: 100,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: child,
+      ))),
+    );
   }
 }

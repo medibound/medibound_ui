@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../components/graph_types.dart';
-import '../graph_widget.dart';
+import '../../graph_types.dart';
+import '../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class FastLineGraph extends GraphWidget {
-  const FastLineGraph({
+class StepLineGraph extends GraphWidget {
+  const StepLineGraph({
      super.key,
     required Map<String, dynamic> variable,
     required Color color,
@@ -26,7 +26,7 @@ class FastLineGraph extends GraphWidget {
 
   @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return FastLineSeries<ChartData, String>(
+    return StepLineSeries<ChartData, String>(
       dataSource: chartData,
       xValueMapper: (ChartData data, _) => data.x,
       yValueMapper: (ChartData data, _) => data.y,

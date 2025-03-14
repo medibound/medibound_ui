@@ -59,11 +59,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    print(Theme.of(context).brightness);
+    //print(Theme.of(context).brightness);
 
     
 
-    print(getWidgetListJson());
+    //print(getWidgetListJson());
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 spacing: 10,
                 children: getWidgetList(Colors.blue,
-                    MBTimeWindow.auto, MBTickerType.std, MBGraphSize.half, height: 125.0),
+                    MBTimeWindow.auto, MBTickerType.std, MBGraphSize.quarter, height: 125.0),
               ),
             ],
           ),

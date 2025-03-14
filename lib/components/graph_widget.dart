@@ -55,7 +55,7 @@ abstract class GraphWidget extends StatelessWidget {
       case MBGraphSize.half:
         return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context), height: height);
       case MBGraphSize.quarter:
-        return QuarterSize(context: context, child: buildGraph(context), height: height);
+        return QuarterSize(context: context, child: buildWidget(context), height: height);
       default:
         return QuarterSize(context: context, child: Text('No Size Selected'), height: height);
     }
@@ -90,5 +90,11 @@ abstract class GraphWidget extends StatelessWidget {
     );
   }
 
-  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData);
+  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData)  {
+    throw UnimplementedError();
+  }
+
+  Widget buildWidget(BuildContext context) {
+    throw UnimplementedError();
+  }
 }

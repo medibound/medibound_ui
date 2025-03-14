@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:medibound_ui/components/graphs/quarter/RadialGraph.dart';
 import '../components/graph_types.dart';
 import '../components/graph_widget.dart';
-import '../components/graphs/BubbleGraph.dart';
-import '../components/graphs/CandleStickGraph.dart';
-import '../components/graphs/ColumnGraph.dart';
-import '../components/graphs/FastLineGraph.dart';
-import '../components/graphs/LineGraph.dart';
-import '../components/graphs/ScatterGraph.dart';
-import '../components/graphs/StackedColumnGraph.dart';
-import '../components/graphs/StepLineGraph.dart';
+import 'graphs/half/BubbleGraph.dart';
+import 'graphs/half/CandleStickGraph.dart';
+import 'graphs/half/ColumnGraph.dart';
+import 'graphs/half/FastLineGraph.dart';
+import 'graphs/half/LineGraph.dart';
+import 'graphs/half/ScatterGraph.dart';
+import 'graphs/half/StackedColumnGraph.dart';
+import 'graphs/half/StepLineGraph.dart';
 
 typedef GraphBuilderFunction = GraphWidget Function(
      Map<String, dynamic> variable, Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, double height);
@@ -117,6 +118,7 @@ final Map<String, GraphBuilderFunction> widgetRegistry = {
   //"StackedBar": (variable, color, timeWindow, tickerType, graphSize, height) => StackedBarGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
   "StackedColumn": (variable, color, timeWindow, tickerType, graphSize, height) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
   "CandleStick": (variable, color, timeWindow, tickerType, graphSize, height) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Radial": (variable, color, timeWindow, tickerType, graphSize, height) => RadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
 };
 
 Widget getWidget(
@@ -167,10 +169,21 @@ MBGraphSize? stringToGraphSize(String value) {
 }
 
 
-List<Widget> getWidgetList(Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, {double height = 100, dynamic variable = null}) {
-  variable ??= mockVariable; 
-  
+List<Widget> getWidgetList(
+  Color color,
+  MBTimeWindow timeWindow,
+  MBTickerType tickerType,
+  MBGraphSize graphSize, {
+  double height = 100,
+  dynamic variable,
+}) {
+  variable ??= mockVariable;
+
   return widgetRegistry.values
+      .where((builder) {
+        final GraphWidget graph = builder(variable, color, timeWindow, tickerType, graphSize, height);
+        return graph.allowedSizes.contains(graphSize); // ✅ Filter by size first
+      })
       .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize, height))
       .toList();
 }
