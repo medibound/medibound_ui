@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
-import 'graph_types.dart';
+import '../graph_types.dart';
 
-class ProcessedGraphData {
+class ProcessedNumberData {
   final List<ChartData> chartData;
+  final List<PointData> parsedPoints;
   final String unit;
   final dynamic info;
   final MBTimeWindow newWindow;
   final double maxY;
   final int interval;
 
-  ProcessedGraphData(
+  ProcessedNumberData(
       {required this.chartData,
+      required this.parsedPoints,
       required this.maxY,
       required this.interval,
       required this.newWindow,
@@ -20,35 +22,9 @@ class ProcessedGraphData {
       required this.info});
 }
 
-MBTimeWindow getAutoWindow(
-    MBTimeWindow timeWindow, List<PointData> parsedPoints) {
-  MBTimeWindow selectedWindow = timeWindow;
-  final DateTime now = DateTime.now();
 
-  if (timeWindow == MBTimeWindow.auto && parsedPoints.isNotEmpty) {
-    final Duration dataRange = now.difference(parsedPoints.last.timestamp);
-    if (dataRange.inMinutes <= 1)
-      selectedWindow = MBTimeWindow.lastMinute;
-    else if (dataRange.inMinutes <= 15)
-      selectedWindow = MBTimeWindow.last15Minutes;
-    else if (dataRange.inMinutes <= 60)
-      selectedWindow = MBTimeWindow.lastHour;
-    else if (dataRange.inHours <= 24)
-      selectedWindow = MBTimeWindow.last24Hours;
-    else if (dataRange.inDays <= 7)
-      selectedWindow = MBTimeWindow.last7Days;
-    else if (dataRange.inDays <= 30)
-      selectedWindow = MBTimeWindow.last30Days;
-    else if (dataRange.inDays <= 365)
-      selectedWindow = MBTimeWindow.pastYear;
-    else
-      selectedWindow = MBTimeWindow.none;
-  }
 
-  return selectedWindow;
-}
-
-ProcessedGraphData processGraphData(
+ProcessedNumberData processNumberData(
     Map<String, dynamic> variable, MBTimeWindow timeWindow) {
   final List<dynamic> points = variable["data"] ?? [];
   final String unit = variable["unit"] ?? "";
@@ -72,7 +48,7 @@ ProcessedGraphData processGraphData(
   Duration bucketInterval = Duration.zero;
   int numBuckets = 0;
   int interval = 1;
-  MBTimeWindow selectedWindow = getAutoWindow(timeWindow, parsedPoints);
+  MBTimeWindow selectedWindow = MBTimeWindowExtension.getAutoWindow(timeWindow, parsedPoints);
 
   switch (selectedWindow) {
     case MBTimeWindow.lastMinute:
@@ -166,8 +142,9 @@ ProcessedGraphData processGraphData(
       .toList();
   double maxY = chartData.map((data) => data.y).reduce((a, b) => a > b ? a : b);
 
-  return ProcessedGraphData(
+  return ProcessedNumberData(
       chartData: chartData,
+      parsedPoints: parsedPoints,
       maxY: maxY,
       interval: interval,
       newWindow: selectedWindow,

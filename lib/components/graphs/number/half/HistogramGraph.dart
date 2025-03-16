@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../graph_types.dart';
-import '../../graph_widget.dart';
+import '../../../graph_types.dart';
+import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class StackedBarGraph extends GraphWidget {
-  const StackedBarGraph({
+class HistogramGraph extends GraphWidget {
+  const HistogramGraph({
      super.key,
     required Map<String, dynamic> variable,
     required Color color,
@@ -25,12 +25,19 @@ class StackedBarGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return StackedBarSeries<ChartData, String>(
+    return HistogramSeries<ChartData, String>(
+      animationDuration: 0,
       dataSource: chartData,
-      xValueMapper: (ChartData data, _) => data.x,
-      yValueMapper: (ChartData data, _) => data.y,
+      yValueMapper: (ChartData data, _) => data.y, // ✅ Uses only `yValueMapper`
+      binInterval: 10.0, // ✅ Controls bin size
       color: color,
+      dataLabelSettings: DataLabelSettings(isVisible: true), // ✅ Show labels
     );
   }
 }

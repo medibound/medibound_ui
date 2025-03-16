@@ -3,7 +3,6 @@ import 'package:medibound_ui/components/theme.dart';
 
 class HalfSize extends StatelessWidget {
   final Widget child;
-  final Widget tickerChild;
   final double height;
   final BuildContext context;
 
@@ -11,7 +10,6 @@ class HalfSize extends StatelessWidget {
     super.key,
     required this.context,
     required this.child,
-    required this.tickerChild,
     required this.height,
   });
 
@@ -30,28 +28,11 @@ class HalfSize extends StatelessWidget {
               color: FlutterFlowTheme.of(context).secondaryBackground,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end, // Align content at the bottom
-              children: [
-                Expanded(
-                  flex: 1, // Takes 1/3 of the space
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: tickerChild,
-                  ),
-                ),
-                Expanded(
-                  flex: 2, // Takes 2/3 of the space
-                  child: ClipRect( // ✅ Ensures no overflow outside the defined space
-                    child: child, // The graph or content
-                  ),
-                ),
-              ],
-            ),
+            child: child,
           ),
         ),
       ),
     );
   }
 }
+

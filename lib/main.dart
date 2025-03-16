@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 spacing: 10,
                 children: getWidgetList(Colors.blue,
-                    MBTimeWindow.auto, MBTickerType.std, MBGraphSize.quarter, height: 125.0),
+                    MBTimeWindow.auto, MBTickerType.std,  MBVariableForm.array, MBVariableType.number, MBGraphSize.half, height: 125.0),
               ),
             ],
           ),

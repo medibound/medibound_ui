@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../graph_types.dart';
-import '../../graph_widget.dart';
+import '../../../graph_types.dart';
+import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class HistogramGraph extends GraphWidget {
-  const HistogramGraph({
+class StepLineGraph extends GraphWidget {
+  const StepLineGraph({
      super.key,
     required Map<String, dynamic> variable,
     required Color color,
@@ -25,13 +25,18 @@ class HistogramGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return  buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return HistogramSeries<ChartData, String>(
+    return StepLineSeries<ChartData, String>(
+      animationDuration: 0,
       dataSource: chartData,
-      yValueMapper: (ChartData data, _) => data.y, // ✅ Uses only `yValueMapper`
-      binInterval: 10.0, // ✅ Controls bin size
+      xValueMapper: (ChartData data, _) => data.x,
+      yValueMapper: (ChartData data, _) => data.y,
       color: color,
-      dataLabelSettings: DataLabelSettings(isVisible: true), // ✅ Show labels
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/theme.dart';
-import '../../graph_types.dart';
-import '../../graph_widget.dart';
+import '../../../graph_types.dart';
+import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class CandleStickGraph extends GraphWidget {
@@ -26,8 +26,14 @@ class CandleStickGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
     return CandleSeries<ChartData, String>(
+      animationDuration: 0,
       dataSource: chartData,
       xValueMapper: (ChartData data, _) => data.x,
       lowValueMapper: (ChartData data, _) => data.y * 0.9, // Min Blood Pressure

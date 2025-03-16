@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../graph_types.dart';
-import '../../graph_widget.dart';
+import '../../../graph_types.dart';
+import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class StepLineGraph extends GraphWidget {
-  const StepLineGraph({
+class StackedColumnGraph extends GraphWidget {
+  const StackedColumnGraph({
      super.key,
     required Map<String, dynamic> variable,
     required Color color,
@@ -25,11 +25,24 @@ class StepLineGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return StepLineSeries<ChartData, String>(
+    return StackedColumnSeries<ChartData, String>(
+      animationDuration: 0,
       dataSource: chartData,
       xValueMapper: (ChartData data, _) => data.x,
       yValueMapper: (ChartData data, _) => data.y,
+      name: 'Values',
+      borderRadius: BorderRadius.circular(2.5),
+      gradient: LinearGradient(
+        colors: [color, color.withValues(alpha: 0.2)],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
       color: color,
     );
   }

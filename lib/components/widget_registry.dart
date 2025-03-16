@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:medibound_ui/components/graphs/quarter/RadialGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/FullRadialGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/LinearGaugeGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/NumberGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/NumberSplitGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/RadialGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/RadialHorizontalGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/RadialIconGraph.dart';
+import 'package:medibound_ui/components/graphs/string/LabelGraph.dart';
+import 'package:medibound_ui/components/graphs/string/LabelModeGraph.dart';
 import '../components/graph_types.dart';
 import '../components/graph_widget.dart';
-import 'graphs/half/BubbleGraph.dart';
-import 'graphs/half/CandleStickGraph.dart';
-import 'graphs/half/ColumnGraph.dart';
-import 'graphs/half/FastLineGraph.dart';
-import 'graphs/half/LineGraph.dart';
-import 'graphs/half/ScatterGraph.dart';
-import 'graphs/half/StackedColumnGraph.dart';
-import 'graphs/half/StepLineGraph.dart';
+import 'graphs/number/half/BubbleGraph.dart';
+import 'graphs/number/half/CandleStickGraph.dart';
+import 'graphs/number/half/ColumnGraph.dart';
+import 'graphs/number/half/FastLineGraph.dart';
+import 'graphs/number/half/LineGraph.dart';
+import 'graphs/number/half/ScatterGraph.dart';
+import 'graphs/number/half/StackedColumnGraph.dart';
+import 'graphs/number/half/StepLineGraph.dart';
 
 typedef GraphBuilderFunction = GraphWidget Function(
      Map<String, dynamic> variable, Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, double height);
@@ -22,7 +30,7 @@ Map<String, dynamic> mockVariable = {
         "color": "",
         "icon": "favorite_rounded"
       },
-      "unit": "m",
+      "unit": "bpm",
       "type": "number",
       "is_list": true,
       "data": [
@@ -34,7 +42,7 @@ Map<String, dynamic> mockVariable = {
         },
         {
           "number": 90.0,
-          "string": "E",
+          "string": "E Hello there I am a label",
           "timestamp":
               DateTime.now().subtract(Duration(minutes: 45)).toIso8601String(),
         },
@@ -64,7 +72,7 @@ Map<String, dynamic> mockVariable = {
         },
         {
           "number": 45.0,
-          "string": "E",
+          "string": "E Hello there I am a label",
           "timestamp":
               DateTime.now().subtract(Duration(minutes: 59)).toIso8601String(),
         },
@@ -82,7 +90,7 @@ Map<String, dynamic> mockVariable = {
         },
         {
           "number": 25.0,
-          "string": "C",
+          "string": "E Hello there I am a label",
           "timestamp":
               DateTime.now().subtract(Duration(minutes: 30)).toIso8601String(),
         },
@@ -94,13 +102,13 @@ Map<String, dynamic> mockVariable = {
         },
         {
           "number": 45.0,
-          "string": "E",
+          "string": "E Hello there I am a label",
           "timestamp":
               DateTime.now().subtract(Duration(minutes: 10)).toIso8601String(),
         },
         {
           "number": 45.0,
-          "string": "E",
+          "string": "E Hello there I am a label",
           "timestamp":
               DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
         },
@@ -119,6 +127,14 @@ final Map<String, GraphBuilderFunction> widgetRegistry = {
   "StackedColumn": (variable, color, timeWindow, tickerType, graphSize, height) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
   "CandleStick": (variable, color, timeWindow, tickerType, graphSize, height) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
   "Radial": (variable, color, timeWindow, tickerType, graphSize, height) => RadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "RadialHorizontal": (variable, color, timeWindow, tickerType, graphSize, height) => RadialHorizontalGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "RadialIcon": (variable, color, timeWindow, tickerType, graphSize, height) => RadialIconGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "LinearGuage": (variable, color, timeWindow, tickerType, graphSize, height) => LinearGaugeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "NumberSplit": (variable, color, timeWindow, tickerType, graphSize, height) => NumberSplitGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Number": (variable, color, timeWindow, tickerType, graphSize, height) => NumberGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "FullRadial": (variable, color, timeWindow, tickerType, graphSize, height) => FullRadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "LabelGraph": (variable, color, timeWindow, tickerType, graphSize, height) => LabelGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "LabelModeGraph": (variable, color, timeWindow, tickerType, graphSize, height) => LabelModeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
 };
 
 Widget getWidget(
@@ -173,6 +189,8 @@ List<Widget> getWidgetList(
   Color color,
   MBTimeWindow timeWindow,
   MBTickerType tickerType,
+  MBVariableForm variableForm,
+  MBVariableType variableType,
   MBGraphSize graphSize, {
   double height = 100,
   dynamic variable,
@@ -182,7 +200,7 @@ List<Widget> getWidgetList(
   return widgetRegistry.values
       .where((builder) {
         final GraphWidget graph = builder(variable, color, timeWindow, tickerType, graphSize, height);
-        return graph.allowedSizes.contains(graphSize); // ✅ Filter by size first
+        return graph.allowedSizes.contains(graphSize) && graph.allowedVariableForms.contains(variableForm) && graph.allowedVariableTypes.contains(variableType); // ✅ Filter by size first
       })
       .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize, height))
       .toList();

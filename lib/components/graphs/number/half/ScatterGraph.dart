@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../graph_types.dart';
-import '../../graph_widget.dart';
+import '../../../graph_types.dart';
+import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class BubbleGraph extends GraphWidget {
-  const BubbleGraph({
-    super.key,
+class ScatterGraph extends GraphWidget {
+  const ScatterGraph({
+     super.key,
     required Map<String, dynamic> variable,
     required Color color,
     required MBTimeWindow timeWindow,
@@ -25,12 +25,17 @@ class BubbleGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return BubbleSeries<ChartData, String>(
+    return ScatterSeries<ChartData, String>(
+      animationDuration: 0,
       dataSource: chartData,
       xValueMapper: (ChartData data, _) => data.x,
       yValueMapper: (ChartData data, _) => data.y,
-      sizeValueMapper: (ChartData data, _) => data.y / 10, // Adjust bubble size
       color: color,
     );
   }

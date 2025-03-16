@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../graph_types.dart';
+import '../../../graph_types.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import '../../graph_widget.dart';
+import '../../../graph_widget.dart';
 
 class LineGraph extends GraphWidget {
   const LineGraph({
@@ -25,8 +25,14 @@ class LineGraph extends GraphWidget {
         );
 
   @override
+  Widget buildWidget(BuildContext context) {
+    return buildSplit(context);
+  }
+
+  @override
   CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
     return SplineAreaSeries<ChartData, String>(
+      animationDuration: 0,
           dataSource: chartData,
           xValueMapper: (ChartData data, _) => data.x,
           yValueMapper: (ChartData data, _) => data.y,

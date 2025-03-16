@@ -3,7 +3,7 @@ import '../components/layouts/HalfSize.dart';
 import '../components/layouts/QuarterSize.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'graph_types.dart';
-import 'graph_data_processing.dart';
+import 'utils/processed_number_data.dart';
 import 'ticker_data_processing.dart';
 
 abstract class GraphWidget extends StatelessWidget {
@@ -39,7 +39,7 @@ abstract class GraphWidget extends StatelessWidget {
   }
 
   Widget buildTicker(BuildContext context) {
-    final processedData = processGraphData(variable, timeWindow);
+    final processedData = processNumberData(variable, timeWindow);
     final List<ChartData> chartData = processedData.chartData;
     final String unit = processedData.unit;
     final MBTimeWindow newWindow = processedData.newWindow;
@@ -53,7 +53,7 @@ abstract class GraphWidget extends StatelessWidget {
 
     switch (graphSize) {
       case MBGraphSize.half:
-        return HalfSize(context: context, child: buildGraph(context), tickerChild: buildTicker(context), height: height);
+        return HalfSize(context: context, child:  buildWidget(context), height: height);
       case MBGraphSize.quarter:
         return QuarterSize(context: context, child: buildWidget(context), height: height);
       default:
@@ -61,12 +61,36 @@ abstract class GraphWidget extends StatelessWidget {
     }
   }
 
+  Widget buildSplit(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end, // Align content at the bottom
+      children: [
+        Expanded(
+          flex: 1, // Takes 1/3 of the space
+          child: Align(
+            alignment: Alignment.center,
+            child: buildTicker(context),
+          ),
+        ),
+        Expanded(
+          flex: 2, // Takes 2/3 of the space
+          child: ClipRect( // ✅ Ensures no overflow outside the defined space
+            child: buildGraph(context), // The graph or content
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget buildGraph(BuildContext context) {
-    final processedData = processGraphData(variable, timeWindow);
+    final processedData = processNumberData(variable, timeWindow);
     final List<ChartData> chartData = processedData.chartData;
     final double maxY = processedData.maxY;
     
     return SfCartesianChart(
+      enableAxisAnimation: false,
+      
       primaryXAxis: CategoryAxis(
         labelPlacement: LabelPlacement.betweenTicks,
         interval: processedData.interval.toDouble(),
@@ -79,6 +103,7 @@ abstract class GraphWidget extends StatelessWidget {
         placeLabelsNearAxisLine: true,
       ),
       primaryYAxis: NumericAxis(
+        
         isVisible: false,
         maximum: maxY,
         plotOffsetEnd: maxY*0.02,
