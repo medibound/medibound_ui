@@ -24,7 +24,7 @@ typedef GraphBuilderFunction = GraphWidget Function(
 
 Map<String, dynamic> mockVariable = { 
       "info": {
-        "displayName": "Heart Rate",
+        "display": "Heart Rate",
         "code": "",
         "description": "",
         "color": "",

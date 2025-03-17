@@ -32,7 +32,7 @@ class LabelModeGraph extends GraphWidget {
     final dynamic info = processedData.info;
     final List<ChartData> chartData = processedData.chartData;
 
-    final String variableName = info?['displayName'] ?? "Unknown";
+    final String variableName = info?['display'] ?? "Unknown";
 
     // Sort labels by frequency (highest first) and take the top 3
     final List<ChartData> topLabels = chartData

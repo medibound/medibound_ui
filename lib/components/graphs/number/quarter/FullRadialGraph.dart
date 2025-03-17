@@ -46,7 +46,7 @@ class FullRadialGraph extends GraphWidget {
         (variable['range']?['lowerBound'] as num?)?.toDouble() ?? 0.0;
     final double maxBound =
         (variable['range']?['upperBound'] as num?)?.toDouble() ?? 100.0;
-    final String variableName = info?['displayName'] ?? "Unknown";
+    final String variableName = info?['display'] ?? "Unknown";
 
     final MbParsedData value =
         MBTickerTypeExtension.getValue(tickerType, chartData);

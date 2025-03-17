@@ -51,7 +51,7 @@ class LinearGaugeGraph extends GraphWidget {
         (variable['range']?['upperBound'] as num?)?.toDouble() ?? 100;
     final MbParsedData value =
         MBTickerTypeExtension.getValue(tickerType, chartData);
-    final String variableName = info?['displayName'] ?? "Unknown";
+    final String variableName = info?['display'] ?? "Unknown";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

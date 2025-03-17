@@ -50,7 +50,7 @@ class StaticTicker extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(info["displayName"] ?? "Person",
+                  Text(info["display"] ?? "Person",
                       style: FlutterFlowTheme.of(context)
                           .titleSmall
                           .copyWith(height: .9, fontSize: 12)),

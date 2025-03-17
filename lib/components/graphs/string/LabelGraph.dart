@@ -33,7 +33,7 @@ class LabelGraph extends GraphWidget {
     final dynamic info = processedData.info;
     final List<ChartData> chartData = processedData.chartData;
 
-    final String variableName = info?['displayName'] ?? "Unknown";
+    final String variableName = info?['display'] ?? "Unknown";
 
     return Center(
       child: Column(

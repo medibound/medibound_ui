@@ -19,6 +19,7 @@ class MBVariablePreset {
   final String icon;
   final MBRange? range;
   final String type;
+  final String unit;
 
   MBVariablePreset({
     required this.display,
@@ -28,6 +29,7 @@ class MBVariablePreset {
     required this.icon,
     this.range,
     required this.type,
+    required this.unit
   });
 }
 
@@ -39,6 +41,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Crayola"),
     icon: "local_fire_department",
     type: "number",
+    unit: "cal",
   ),
   MBVariablePreset(
     display: "Basal Energy Burned",
@@ -47,6 +50,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Flare"),
     icon: "battery_full",
     type: "number",
+    unit: "cal",
   ),
   MBVariablePreset(
     display: "Blood Glucose",
@@ -56,6 +60,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "bloodtype",
     range: MBRange(lowerBound: 70.0, upperBound: 200.0),
     type: "number",
+    unit: "mg/dL",
   ),
   MBVariablePreset(
     display: "Blood Oxygen",
@@ -65,6 +70,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "air",
     range: MBRange(lowerBound: 0.0, upperBound: 100.0),
     type: "number",
+    unit: "%",
   ),
   MBVariablePreset(
     display: "Blood Pressure Diastolic",
@@ -74,6 +80,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "monitor_heart",
     range: MBRange(lowerBound: 60.0, upperBound: 90.0),
     type: "number",
+    unit: "mm[Hg]",
   ),
   MBVariablePreset(
     display: "Blood Pressure Systolic",
@@ -83,6 +90,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "monitor_heart",
     range: MBRange(lowerBound: 90.0, upperBound: 140.0),
     type: "number",
+    unit: "mm[Hg]",
   ),
   MBVariablePreset(
     display: "Body Fat Percentage",
@@ -92,6 +100,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "fitness_center",
     range: MBRange(lowerBound: 0.0, upperBound: 100.0),
     type: "number",
+    unit: "%",
   ),
   MBVariablePreset(
     display: "Body Mass Index",
@@ -101,6 +110,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "scale",
     range: MBRange(lowerBound: 18.5, upperBound: 30.0),
     type: "number",
+    unit: "{none}",
   ),
   MBVariablePreset(
     display: "Body Temperature",
@@ -110,6 +120,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "thermostat",
     range: MBRange(lowerBound: 30.0, upperBound: 50.0),
     type: "number",
+    unit: "Cel",
   ),
   MBVariablePreset(
     display: "Heart Rate",
@@ -119,6 +130,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "favorite",
     range: MBRange(lowerBound: 40.0, upperBound: 180.0),
     type: "number",
+    unit: "/min",
   ),
   MBVariablePreset(
     display: "Respiratory Rate",
@@ -128,6 +140,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "lungs",
     range: MBRange(lowerBound: 10.0, upperBound: 30.0),
     type: "number",
+    unit: "/min",
   ),
   MBVariablePreset(
     display: "Resting Heart Rate",
@@ -137,6 +150,7 @@ List<MBVariablePreset> mBVariablePresets = [
     icon: "self_improvement",
     range: MBRange(lowerBound: 40.0, upperBound: 100.0),
     type: "number",
+    unit: "/min",
   ),
   MBVariablePreset(
     display: "Steps",
@@ -145,6 +159,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Slate"),
     icon: "directions_walk",
     type: "number",
+    unit: "{count}",
   ),
   MBVariablePreset(
     display: "Water Intake",
@@ -153,6 +168,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Munsell"),
     icon: "water_drop",
     type: "number",
+    unit: "L",
   ),
   MBVariablePreset(
     display: "Weight",
@@ -161,6 +177,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Amber"),
     icon: "scale",
     type: "number",
+    unit: "kg",
   ),
   MBVariablePreset(
     display: "Workout",
@@ -169,6 +186,7 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Crystal"),
     icon: "fitness_center",
     type: "number",
+    unit: "{none}",
   ),
   MBVariablePreset(
     display: "Custom Profile",
@@ -177,5 +195,6 @@ List<MBVariablePreset> mBVariablePresets = [
     color: getMBColorByName("Slate"),
     icon: "person",
     type: "custom",
+    unit: "{none}",
   ),
 ];

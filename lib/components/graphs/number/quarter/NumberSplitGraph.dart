@@ -48,7 +48,7 @@ class NumberSplitGraph extends GraphWidget {
         MBTickerTypeExtension.getValue(tickerType, chartData);
     final MbParsedData latestValue =
         MBTickerTypeExtension.getValue(MBTickerType.last, chartData);
-    final String variableName = info?['displayName'] ?? "Unknown";
+    final String variableName = info?['display'] ?? "Unknown";
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
