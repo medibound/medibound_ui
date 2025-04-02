@@ -12,7 +12,8 @@ class CandleStickGraph extends GraphWidget {
     required MBTimeWindow timeWindow,
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
-    required double height
+    required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -20,10 +21,12 @@ class CandleStickGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.half],
           allowedVariableTypes: const [MBVariableType.number],
           allowedVariableForms: const [MBVariableForm.array],
         );
+        
 
   @override
   Widget buildWidget(BuildContext context) {
@@ -31,11 +34,11 @@ class CandleStickGraph extends GraphWidget {
   }
 
   @override
-  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return CandleSeries<ChartData, String>(
+  CartesianSeries<ChartData, DateTime> buildSeries(BuildContext context, List<ChartData> chartData) {
+    return CandleSeries<ChartData, DateTime>(
       animationDuration: 0,
       dataSource: chartData,
-      xValueMapper: (ChartData data, _) => data.x,
+      xValueMapper: (ChartData data, _) => DateTime.parse(data.x),
       lowValueMapper: (ChartData data, _) => data.y * 0.9, // Min Blood Pressure
       highValueMapper: (ChartData data, _) =>
           data.y * 1.1, // Max Blood Pressure

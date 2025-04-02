@@ -15,6 +15,7 @@ class RadialGraph extends GraphWidget {
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
     required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -22,6 +23,7 @@ class RadialGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.quarter],
           allowedVariableTypes: const [MBVariableType.number],
           allowedVariableForms: const [MBVariableForm.array,MBVariableForm.singleton ],
@@ -30,7 +32,7 @@ class RadialGraph extends GraphWidget {
 
   @override
   Widget buildWidget(BuildContext context) {
-    final processedData = processNumberData(variable, timeWindow);
+    final processedData = processNumberData(variable, timeWindow, referenceTime);
     final List<ChartData> chartData = processedData.chartData;
         final List<PointData> parsedPoints = processedData.parsedPoints;
 

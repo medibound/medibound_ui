@@ -20,7 +20,7 @@ import 'graphs/number/half/StackedColumnGraph.dart';
 import 'graphs/number/half/StepLineGraph.dart';
 
 typedef GraphBuilderFunction = GraphWidget Function(
-     Map<String, dynamic> variable, Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, double height);
+     Map<String, dynamic> variable, Color color, MBTimeWindow timeWindow, MBTickerType tickerType, MBGraphSize graphSize, double height, DateTime referenceTime);
 
 Map<String, dynamic> mockVariable = { 
       "info": {
@@ -33,114 +33,63 @@ Map<String, dynamic> mockVariable = {
       "unit": "bpm",
       "type": "number",
       "is_list": true,
+      /*"range": {
+        "lower_bound": 0,
+        "upper_bound": 50,
+      },*/
       "data": [
-        {
-          "number": 35.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 37)).toIso8601String(),
-        },
-        {
-          "number": 90.0,
-          "string": "E Hello there I am a label",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 45)).toIso8601String(),
-        },
-        {
-          "number": 5.0,
-          "string": "A",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 40)).toIso8601String(),
-        },
-        {
-          "number": 15.0,
-          "string": "B",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 50)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "C",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 55)).toIso8601String(),
-        },
-        {
-          "number": 135.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 59)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E Hello there I am a label",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 59)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "A",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 50)).toIso8601String(),
-        },
-        {
-          "number": 15.0,
-          "string": "B",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 40)).toIso8601String(),
-        },
-        {
-          "number": 25.0,
-          "string": "E Hello there I am a label",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 30)).toIso8601String(),
-        },
-        {
-          "number": 35.0,
-          "string": "D",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 20)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E Hello there I am a label",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 10)).toIso8601String(),
-        },
-        {
-          "number": 45.0,
-          "string": "E Hello there I am a label",
-          "timestamp":
-              DateTime.now().subtract(Duration(minutes: 5)).toIso8601String(),
-        },
+        {"number": 0.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 0)).toIso8601String()},
+    {"number": 15.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 3)).toIso8601String()},
+    {"number": 30.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 6)).toIso8601String()},
+    {"number": 41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 9)).toIso8601String()},
+    {"number": 48.2, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 12)).toIso8601String()},
+    {"number": 49.9, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 15)).toIso8601String()},
+    {"number": 46.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 18)).toIso8601String()},
+    {"number": 38.3, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 21)).toIso8601String()},
+    {"number": 26.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
+    {"number": 11.1, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 27)).toIso8601String()},
+    {"number": -5.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 30)).toIso8601String()},
+    {"number": -20.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 33)).toIso8601String()},
+    {"number": -33.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 36)).toIso8601String()},
+    {"number": -41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 39)).toIso8601String()},
+    {"number": -45.8, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 42)).toIso8601String()},
+    {"number": -45.8, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 45)).toIso8601String()},
+    {"number": -41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 48)).toIso8601String()},
+    {"number": -33.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 51)).toIso8601String()},
+    {"number": -20.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 54)).toIso8601String()},
+        {"number": 26.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
+
+    {"number": -5.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 57)).toIso8601String()},
       ],
     };
 
 final Map<String, GraphBuilderFunction> widgetRegistry = {
-  "Column": (variable, color, timeWindow, tickerType, graphSize, height) => ColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Line": (variable, color, timeWindow, tickerType, graphSize, height) => LineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Scatter": (variable, color, timeWindow, tickerType, graphSize, height) => ScatterGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "StepLine": (variable, color, timeWindow, tickerType, graphSize, height) => StepLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "FastLine": (variable, color, timeWindow, tickerType, graphSize, height) => FastLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  //"Histogram": (variable, color, timeWindow, tickerType, graphSize, height) => HistogramGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Bubble": (variable, color, timeWindow, tickerType, graphSize, height) => BubbleGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  //"StackedBar": (variable, color, timeWindow, tickerType, graphSize, height) => StackedBarGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "StackedColumn": (variable, color, timeWindow, tickerType, graphSize, height) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "CandleStick": (variable, color, timeWindow, tickerType, graphSize, height) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Radial": (variable, color, timeWindow, tickerType, graphSize, height) => RadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "RadialHorizontal": (variable, color, timeWindow, tickerType, graphSize, height) => RadialHorizontalGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "RadialIcon": (variable, color, timeWindow, tickerType, graphSize, height) => RadialIconGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "LinearGuage": (variable, color, timeWindow, tickerType, graphSize, height) => LinearGaugeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "NumberSplit": (variable, color, timeWindow, tickerType, graphSize, height) => NumberSplitGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "Number": (variable, color, timeWindow, tickerType, graphSize, height) => NumberGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "FullRadial": (variable, color, timeWindow, tickerType, graphSize, height) => FullRadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "LabelGraph": (variable, color, timeWindow, tickerType, graphSize, height) => LabelGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
-  "LabelModeGraph": (variable, color, timeWindow, tickerType, graphSize, height) => LabelModeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height),
+  "Column": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => ColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "Line": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "Scatter": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => ScatterGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "StepLine": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => StepLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "FastLine": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => FastLineGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  //"Histogram": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => HistogramGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "Bubble": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => BubbleGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  //"StackedBar": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => StackedBarGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "StackedColumn": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => StackedColumnGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "CandleStick": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => CandleStickGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "Radial": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => RadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "RadialHorizontal": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => RadialHorizontalGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "RadialIcon": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => RadialIconGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "LinearGuage": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LinearGaugeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "NumberSplit": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => NumberSplitGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "Number": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => NumberGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "FullRadial": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => FullRadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "LabelGraph": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LabelGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "LabelModeGraph": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LabelModeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
 };
 
 Widget getWidget(
   String widgetType,
   Color color,  // ✅ Changed to String // ✅ Changed to String
-  String graphSizeStr,   // ✅ Changed to String
+  String graphSizeStr,
+  DateTime referenceTime,   // ✅ Changed to String
   {String timeWindowStr = 'auto', String tickerTypeStr = 'last', double height = 100, dynamic variable}
 ) {
   variable ??= mockVariable;
@@ -156,7 +105,7 @@ Widget getWidget(
   graphSize ??= MBGraphSize.half;
 
   return widgetRegistry[widgetType]?.call(
-        variable, color, timeWindow, tickerType, graphSize, height) ??
+        variable, color, timeWindow, tickerType, graphSize, height, referenceTime) ??
       const SizedBox(); // Default to empty if not found
 }
 
@@ -191,25 +140,26 @@ List<Widget> getWidgetList(
   MBTickerType tickerType,
   MBVariableForm variableForm,
   MBVariableType variableType,
-  MBGraphSize graphSize, {
+  MBGraphSize graphSize,DateTime referenceTime, {
   double height = 100,
   dynamic variable,
+  
 }) {
   variable ??= mockVariable;
 
   return widgetRegistry.values
       .where((builder) {
-        final GraphWidget graph = builder(variable, color, timeWindow, tickerType, graphSize, height);
+        final GraphWidget graph = builder(variable, color, timeWindow, tickerType, graphSize, height, referenceTime);
         return graph.allowedSizes.contains(graphSize) && graph.allowedVariableForms.contains(variableForm) && graph.allowedVariableTypes.contains(variableType); // ✅ Filter by size first
       })
-      .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize, height))
+      .map((builder) => builder(variable, color, timeWindow, tickerType, graphSize, height, referenceTime))
       .toList();
 }
 
 
 Map<String, dynamic> getWidgetListJson() {
   return widgetRegistry.map((name, builder) {
-    final GraphWidget graph = builder({}, Colors.blue, MBTimeWindow.auto, MBTickerType.last, MBGraphSize.half, 100); // ✅ Ensure proper casting
+    final GraphWidget graph = builder({}, Colors.blue, MBTimeWindow.auto, MBTickerType.last, MBGraphSize.half, 100, DateTime.now()); // ✅ Ensure proper casting
   
     return MapEntry(name, {
       "name": name,

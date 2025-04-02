@@ -15,6 +15,7 @@ class NumberSplitGraph extends GraphWidget {
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
     required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -22,6 +23,7 @@ class NumberSplitGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.quarter, MBGraphSize.half],
           allowedVariableTypes: const [MBVariableType.number],
           allowedVariableForms: const [MBVariableForm.array],
@@ -29,7 +31,7 @@ class NumberSplitGraph extends GraphWidget {
 
   @override
   Widget buildWidget(BuildContext context) {
-    final processedData = processNumberData(variable, timeWindow);
+    final processedData = processNumberData(variable, timeWindow, referenceTime);
     final List<ChartData> chartData = processedData.chartData;
     final String unit = processedData.unit;
     final dynamic info = processedData.info;

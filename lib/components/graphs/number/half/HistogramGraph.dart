@@ -11,7 +11,8 @@ class HistogramGraph extends GraphWidget {
     required MBTimeWindow timeWindow,
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
-    required double height
+    required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -19,6 +20,7 @@ class HistogramGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.half],
           allowedVariableTypes: const [MBVariableType.number],
           allowedVariableForms: const [MBVariableForm.array],
@@ -30,8 +32,8 @@ class HistogramGraph extends GraphWidget {
   }
 
   @override
-  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return HistogramSeries<ChartData, String>(
+  CartesianSeries<ChartData, DateTime> buildSeries(BuildContext context, List<ChartData> chartData) {
+    return HistogramSeries<ChartData, DateTime>(
       animationDuration: 0,
       dataSource: chartData,
       yValueMapper: (ChartData data, _) => data.y, // ✅ Uses only `yValueMapper`

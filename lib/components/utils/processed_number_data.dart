@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../graph_types.dart';
 
 class ProcessedNumberData {
@@ -9,27 +10,44 @@ class ProcessedNumberData {
   final String unit;
   final dynamic info;
   final MBTimeWindow newWindow;
+  final double minY;
   final double maxY;
-  final int interval;
+  final DateTime minX;
+  final DateTime maxX;
+  final DateTime referenceTime;
+  final DateTimeIntervalType dateIntervalFormat;
+  final DateFormat dateFormat;
+  final String labelFormat;
+  final bool showAxis;
+  final double interval;
 
   ProcessedNumberData(
       {required this.chartData,
       required this.parsedPoints,
+      required this.minY,
       required this.maxY,
-      required this.interval,
+      required this.minX,
+      required this.maxX,
       required this.newWindow,
       required this.unit,
-      required this.info});
+      required this.info,
+      required this.referenceTime,
+      required this.dateIntervalFormat,
+      required this.dateFormat,
+      required this.labelFormat,
+      required this.showAxis,
+      required this.interval});
 }
 
-
-
 ProcessedNumberData processNumberData(
-    Map<String, dynamic> variable, MBTimeWindow timeWindow) {
+// Suggested code may be subject to a license. Learn more: ~LicenseLog:2638190097.
+    Map<String, dynamic> variable,
+    MBTimeWindow timeWindow,
+    DateTime referenceTime) {
   final List<dynamic> points = variable["data"] ?? [];
   final String unit = variable["unit"] ?? "";
   final dynamic info = variable["info"] ?? {};
-  final DateTime now = DateTime.now();
+  final DateTime now = referenceTime;
 
   final List<PointData> parsedPoints = points.map<PointData>((data) {
     return PointData(
@@ -44,110 +62,163 @@ ProcessedNumberData processNumberData(
   parsedPoints
       .sort((a, b) => b.timestamp.compareTo(a.timestamp)); // Sort ascending
 
-  // Determine bucket interval & labels
-  Duration bucketInterval = Duration.zero;
-  int numBuckets = 0;
-  int interval = 1;
-  MBTimeWindow selectedWindow = MBTimeWindowExtension.getAutoWindow(timeWindow, parsedPoints);
+  double minY = 0.0; // Default minimum value
+  double maxY = parsedPoints.isNotEmpty
+      ? parsedPoints.map((p) => p.number).reduce((a, b) => a > b ? a : b)
+      : 0.0; // Default max if no points exist
 
-  switch (selectedWindow) {
+// Check if `range` exists and contains valid values
+  if (variable["range"] != null &&
+      variable["range"]['lower_bound'] != null &&
+      variable["range"]['upper_bound'] != null) {
+    double tempMin = variable["range"]['lower_bound'].toDouble();
+    double tempMax = variable["range"]['upper_bound'].toDouble();
+
+    // Ensure valid range
+    if (tempMin < tempMax) {
+      minY = tempMin;
+      maxY = tempMax;
+    }
+  }
+
+// Final check: if `minY` is not less than `maxY`, reset `minY` to 0
+  if (minY >= maxY) {
+    minY = 0.0;
+  }
+
+  // ✅ Determine min and max timestamps for the selected timeWindow
+  DateTime minX = now.subtract(const Duration(hours: 24));
+  DateTime maxX = now;
+
+  switch (timeWindow) {
     case MBTimeWindow.lastMinute:
-      bucketInterval = const Duration(seconds: 10);
-      numBuckets = 6;
+      minX = now.subtract(const Duration(minutes: 1));
       break;
     case MBTimeWindow.last15Minutes:
-      bucketInterval = const Duration(minutes: 1);
-      numBuckets = 15;
-      interval = 3;
+      minX = now.subtract(const Duration(minutes: 15));
       break;
     case MBTimeWindow.lastHour:
-      bucketInterval = const Duration(minutes: 5);
-      numBuckets = 12;
-      interval = 2;
+      minX = now.subtract(const Duration(hours: 1));
       break;
     case MBTimeWindow.last24Hours:
-      bucketInterval = const Duration(hours: 1);
-      numBuckets = 24;
-      interval = 3;
+      minX = now.subtract(const Duration(hours: 24));
       break;
     case MBTimeWindow.last7Days:
-      bucketInterval = const Duration(days: 1);
-      numBuckets = 7;
+      minX = now.subtract(const Duration(days: 7));
       break;
     case MBTimeWindow.last30Days:
-      bucketInterval = const Duration(days: 1);
-      numBuckets = 30;
-      interval = 5;
+      minX = now.subtract(const Duration(days: 30));
       break;
     case MBTimeWindow.pastYear:
-      bucketInterval = const Duration(days: 30);
-      numBuckets = 12;
-      interval = 1;
+      minX = now.subtract(const Duration(days: 365));
       break;
     case MBTimeWindow.none:
-      numBuckets = parsedPoints.length;
+      if (parsedPoints.isNotEmpty) {
+        minX = parsedPoints.first.timestamp;
+        maxX = parsedPoints.last.timestamp;
+      }
       break;
     case MBTimeWindow.auto:
-      bucketInterval = const Duration(hours: 1);
-      numBuckets = 20;
-      interval = 4;
+      if (parsedPoints.isNotEmpty) {
+        minX = parsedPoints.first.timestamp;
+        maxX = parsedPoints.last.timestamp;
+      }
       break;
   }
 
-  List<DateTime> bucketTimestamps = List.generate(
-    numBuckets + 1,
-    (i) => now.subtract(bucketInterval * ((numBuckets - i))),
-  );
+  DateTimeIntervalType dateIntervalFormat;
+  DateFormat dateFormat;
+  String labelFormat;
+  bool showAxis = true;
+  double interval;
 
-  List<String> bucketLabels = bucketTimestamps.map((t) {
-    Duration diff = now.difference(t);
-    switch (selectedWindow) {
-      case MBTimeWindow.lastMinute:
-      case MBTimeWindow.last15Minutes:
-      case MBTimeWindow.lastHour:
-        return "${diff.inMinutes}m";
-      case MBTimeWindow.last24Hours:
-        return "${diff.inHours}h";
-      case MBTimeWindow.last7Days:
-        return DateFormat('EEE')
-            .format(t.add(Duration(days: 1))); // "Mon", "Tue"
-      case MBTimeWindow.last30Days:
-        return "${diff.inDays}d";
-      case MBTimeWindow.pastYear:
-        return DateFormat('MMM').format(t); // "Jan", "Feb"
-      default:
-        return "";
-    }
-  }).toList();
-
-  bucketLabels.removeLast();
-
-  final Map<String, double> aggregatedData = {
-    for (var label in bucketLabels) label: 0.0
-  };
-
-  for (var point in parsedPoints) {
-    for (var i = 0; i < bucketTimestamps.length - 1; i++) {
-      if (point.timestamp.isAfter(bucketTimestamps[i]) &&
-          point.timestamp.isBefore(bucketTimestamps[i + 1])) {
-        aggregatedData[bucketLabels[i]] =
-            (aggregatedData[bucketLabels[i]] ?? 0) + point.number;
-        break;
-      }
-    }
+  switch (timeWindow) {
+    case MBTimeWindow.lastMinute:
+      dateIntervalFormat = DateTimeIntervalType.seconds;
+      dateFormat = DateFormat.s();
+      labelFormat = '{value}s';
+      interval = 15; // Seconds
+      break;
+    case MBTimeWindow.last15Minutes:
+      dateIntervalFormat = DateTimeIntervalType.minutes;
+      dateFormat = DateFormat.jm();
+      labelFormat = '{value}';
+      interval = 3; // Minutes
+      break;
+    case MBTimeWindow.lastHour:
+      dateIntervalFormat = DateTimeIntervalType.hours;
+      dateFormat = DateFormat.jm();
+      labelFormat = '{value}';
+      interval = 0.25; // Minutes
+      break;
+    case MBTimeWindow.last24Hours:
+      dateIntervalFormat = DateTimeIntervalType.hours;
+      dateFormat = DateFormat.j();
+      labelFormat = '{value}';
+      interval = 6; // Hours
+      break;
+    case MBTimeWindow.last7Days:
+      dateIntervalFormat = DateTimeIntervalType.days;
+      dateFormat = DateFormat.E();
+      labelFormat = '{value}';
+      interval = 1; // Day of the week (Mon, Tue, Wed)
+      break;
+    case MBTimeWindow.last30Days:
+      dateIntervalFormat = DateTimeIntervalType.days;
+      dateFormat = DateFormat.d();
+      labelFormat = '{value}d';
+      interval = 5; // Days
+      break;
+    case MBTimeWindow.pastYear:
+      dateIntervalFormat = DateTimeIntervalType.months;
+      dateFormat = DateFormat.LLL();
+      labelFormat = '{value}';
+      interval = 1; // Month (Nov, Dec)
+      break;
+    case MBTimeWindow.none:
+      dateIntervalFormat = DateTimeIntervalType.auto;
+      dateFormat = DateFormat.j();
+      labelFormat = '{value}hr';
+      showAxis = false;
+      interval = 1;
+      break;
+    case MBTimeWindow.auto:
+      dateIntervalFormat = DateTimeIntervalType.auto;
+      dateFormat = DateFormat.j();
+      labelFormat = '{value}hr';
+      interval = 1; // Full date-time
+      break;
+    default:
+      dateIntervalFormat = DateTimeIntervalType.auto;
+      dateFormat = DateFormat.j();
+      labelFormat = '{value}hr';
+      interval = 1; // Default format
+      break;
   }
+  // ✅ Ensure min and max timestamps reflect actual data range
+  /*if (parsedPoints.isNotEmpty) {
+    minX = parsedPoints.first.timestamp.isBefore(minX) ? minX : parsedPoints.first.timestamp;
+    maxX = parsedPoints.last.timestamp.isAfter(maxX) ? maxX : parsedPoints.last.timestamp;
+  }*/
 
-  final List<ChartData> chartData = aggregatedData.entries
-      .map((entry) => ChartData(entry.key, entry.value))
-      .toList();
-  double maxY = chartData.map((data) => data.y).reduce((a, b) => a > b ? a : b);
-
+  // ✅ If bucketing is disabled, return raw points but still maintain X-axis range
   return ProcessedNumberData(
-      chartData: chartData,
-      parsedPoints: parsedPoints,
-      maxY: maxY,
-      interval: interval,
-      newWindow: selectedWindow,
-      unit: unit,
-      info: info);
+    chartData: parsedPoints
+        .map((p) => ChartData(p.timestamp.toString(), p.number))
+        .toList(),
+    parsedPoints: parsedPoints,
+    minY: minY,
+    maxY: maxY,
+    newWindow: timeWindow,
+    unit: unit,
+    info: info,
+    maxX: maxX,
+    minX: minX,
+    referenceTime: referenceTime,
+    dateIntervalFormat: dateIntervalFormat,
+    dateFormat: dateFormat,
+    labelFormat: labelFormat,
+    showAxis: showAxis,
+    interval: interval,
+  );
 }

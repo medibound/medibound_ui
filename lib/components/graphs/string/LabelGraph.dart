@@ -14,6 +14,7 @@ class LabelGraph extends GraphWidget {
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
     required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -21,6 +22,7 @@ class LabelGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.quarter, MBGraphSize.half],
           allowedVariableTypes: const [MBVariableType.string],
           allowedVariableForms: const [MBVariableForm.singleton, MBVariableForm.array],

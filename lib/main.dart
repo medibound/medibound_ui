@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Column(
                 spacing: 10,
                 children: getWidgetList(Colors.blue,
-                    MBTimeWindow.auto, MBTickerType.std,  MBVariableForm.array, MBVariableType.number, MBGraphSize.half, height: 125.0),
+                    MBTimeWindow.lastHour, MBTickerType.mean,  MBVariableForm.array, MBVariableType.number, MBGraphSize.half, height: 125.0, DateTime.now().subtract(Duration(minutes: 0))),
               ),
             ],
           ),

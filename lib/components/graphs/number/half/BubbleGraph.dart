@@ -11,7 +11,8 @@ class BubbleGraph extends GraphWidget {
     required MBTimeWindow timeWindow,
     required MBTickerType tickerType,
     required MBGraphSize graphSize,
-    required double height
+    required double height,
+    required DateTime referenceTime,
   }) : super(
           timeWindow: timeWindow,
           tickerType: tickerType,
@@ -19,6 +20,7 @@ class BubbleGraph extends GraphWidget {
           variable: variable,
           color: color,
           height: height,
+          referenceTime: referenceTime,
           allowedSizes: const [MBGraphSize.half],
           allowedVariableTypes: const [MBVariableType.number],
           allowedVariableForms: const [MBVariableForm.array],
@@ -30,11 +32,11 @@ class BubbleGraph extends GraphWidget {
   }
 
   @override
-  CartesianSeries<ChartData, String> buildSeries(BuildContext context, List<ChartData> chartData) {
-    return BubbleSeries<ChartData, String>(
+  CartesianSeries<ChartData, DateTime> buildSeries(BuildContext context, List<ChartData> chartData) {
+    return BubbleSeries<ChartData, DateTime>(
       animationDuration: 0,
       dataSource: chartData,
-      xValueMapper: (ChartData data, _) => data.x,
+      xValueMapper: (ChartData data, _) => DateTime.parse(data.x),
       yValueMapper: (ChartData data, _) => data.y,
       sizeValueMapper: (ChartData data, _) => data.y / 10, // Adjust bubble size
       color: color,
