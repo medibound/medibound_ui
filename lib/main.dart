@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:medibound_ui/components/inputs/Dropdown.dart';
+import 'package:medibound_ui/components/theme.dart';
+import 'package:medibound_ui/medibound_ui.dart';
 import './components/graph_types.dart';
 import './components/widget_registry.dart';
+import './components/inputs/ProfileDropdown.dart';
+import './components/utils/Profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -57,6 +62,71 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  MBInfo? selectedItem;
+  MBProfile? selectedProfile;
+  final List<MBInfo> dropdownItems = [
+    MBInfo(
+      display: "Archimedic",
+      description: "Manufacturer",
+      code: "archimedic",
+    ),
+    MBInfo(
+      display: "Venture Labs",
+      description: "Research and Development",
+      code: "venture_labs",
+      color: Colors.blue,
+      icon: "science",
+    ),
+    MBInfo(
+      display: "Medibound",
+      description: "Software Development",
+      code: "medibound",
+      color: Colors.teal,
+      icon: "code",
+    ),
+    MBInfo(
+      display: "BrickSimple",
+      description: "Software Development",
+      code: "bricksimple",
+      color: Colors.red[900]!,
+      icon: "architecture",
+    ),
+    MBInfo(
+      display: "Penn Medicine",
+      description: "Education",
+      code: "penn_medicine",
+      color: Colors.indigo[900]!,
+      icon: "school",
+    ),
+  ];
+
+  final List<MBProfile> profiles = [
+    MBProfile(
+      display: "John Smith",
+      description: "Lead Developer",
+      photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrPoFxnoMhPYStzoBvF2C51CrxYc2vo8-yg&s",
+      uid: "user1",
+    ),
+    MBProfile(
+      display: "Sarah Johnson",
+      description: "Product Manager",
+      photoUrl: "https://i.pravatar.cc/150?img=2",
+      uid: "user2",
+    ),
+    MBProfile(
+      display: "Michael Brown",
+      description: "UX Designer",
+      photoUrl: "https://i.pravatar.cc/150?img=3",
+      uid: "user3",
+    ),
+    MBProfile(
+      display: "Emily Davis",
+      description: "Software Engineer",
+      photoUrl: "https://i.pravatar.cc/150?img=4",
+      uid: "user4",
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     //print(Theme.of(context).brightness);
@@ -72,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -80,6 +150,44 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ListView(
             shrinkWrap: true,
             children: [
+              MBDropdown(
+                items: dropdownItems,
+                selectedItem: selectedItem,
+                onChanged: (value) {
+                  setState(() {
+                    selectedItem = value;
+                  });
+                },
+                hintText: "Select an option",
+              ),
+              MbProfileDropdown(
+                items: profiles,
+                selectedItem: selectedProfile,
+                onChanged: (profile) {
+                  setState(() {
+                    selectedProfile = profile;
+                  });
+                },
+                hintText: "Select a team member",
+                circle: true,
+              ),
+              const SizedBox(height: 20),
+              MbProfileDropdown(
+                items: profiles,
+                selectedItem: selectedProfile,
+                onChanged: (profile) {
+                  setState(() {
+                    selectedProfile = profile;
+                  });
+                },
+                hintText: "Select a team member (square)",
+              ),
+              if (selectedProfile != null)
+                Text(
+                  'Selected: ${selectedProfile!.display} (${selectedProfile!.description})',
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
               Column(
                 spacing: 10,
                 children: getWidgetList(Colors.blue,

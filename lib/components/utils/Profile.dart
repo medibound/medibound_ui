@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
-class MBInfo {
+class MBProfile {
   final String display;
   final String description;
-  final String code;
-  final Color? color;
-  final String? icon;
+  final String photoUrl;
+  final String uid;
 
-  MBInfo({
+  MBProfile({
     required this.display,
     required this.description,
-    required this.code,
-    this.color,
-    this.icon,
+    required this.photoUrl,
+    required this.uid,
   });
 }
+

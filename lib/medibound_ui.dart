@@ -7,12 +7,14 @@ export 'components/utils/processed_label_data.dart';
 
 export 'components/utils/Info.dart';
 export 'components/utils/Types.dart';
+export 'components/utils/Profile.dart';
 export 'components/utils/Colors.dart';
 export 'components/utils/VariablePresets.dart';
 export 'components/utils/IconsFT.dart';
 
 
-
+export 'components/inputs/Dropdown.dart';
+export 'components/inputs/ProfileDropdown.dart';
 
 export 'components/graph_types.dart';
 export 'components/widget_registry.dart';
