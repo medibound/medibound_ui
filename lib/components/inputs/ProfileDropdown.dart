@@ -3,7 +3,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:medibound_ui/components/theme.dart';
 import 'package:medibound_ui/components/utils/Profile.dart';
 
-class MbProfileDropdown extends StatelessWidget {
+class MbProfileDropdown extends StatefulWidget {
   final List<MBProfile> items;
   final MBProfile? selectedItem;
   final Function(MBProfile?) onChanged;
@@ -23,12 +23,25 @@ class MbProfileDropdown extends StatelessWidget {
     this.circle = false,
   }) : super(key: key);
 
+  @override
+  State<MbProfileDropdown> createState() => _MbProfileDropdownState();
+}
+
+class _MbProfileDropdownState extends State<MbProfileDropdown> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedItem != null) {
+      widget.onChanged(widget.selectedItem);
+    }
+  }
+
   Widget _buildProfileImage(MBProfile profile) {
     return Container(
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(circle ? 15 : 5),
+        borderRadius: BorderRadius.circular(widget.circle ? 15 : 5),
         image: DecorationImage(
           image: NetworkImage(profile.photoUrl),
           fit: BoxFit.cover,
@@ -53,6 +66,8 @@ class MbProfileDropdown extends StatelessWidget {
               ),
               Text(
                 profile.description,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: FlutterFlowTheme.of(context).labelSmall.copyWith(height: 1),
               ),
             ],
@@ -71,14 +86,14 @@ class MbProfileDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownSearch<MBProfile>(
-        items: items,
-        selectedItem: selectedItem,
-        onChanged: onChanged,
-        enabled: isEnabled,
+        items: widget.items,
+        selectedItem: widget.selectedItem,
+        onChanged: widget.onChanged,
+        enabled: widget.isEnabled,
         filterFn: (item, filter) => 
           item.display.toLowerCase().contains(filter.toLowerCase()),
         popupProps: PopupProps.menu(
-          showSearchBox: showSearchBox,
+          showSearchBox: widget.showSearchBox,
           fit: FlexFit.loose,
           constraints: const BoxConstraints(maxHeight: 400),
           searchFieldProps: TextFieldProps(
@@ -117,7 +132,7 @@ class MbProfileDropdown extends StatelessWidget {
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
-            hintText: hintText ?? "Select a profile",
+            hintText: widget.hintText ?? "Select a profile",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
@@ -131,8 +146,8 @@ class MbProfileDropdown extends StatelessWidget {
         dropdownBuilder: (context, item) {
           if (item == null) {
             return Text(
-              hintText ?? "Select a profile",
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
+              widget.hintText ?? "Select a profile",
+              style: TextStyle(color: Colors.grey[600], fontSize: 14),
             );
           }
           return Container(

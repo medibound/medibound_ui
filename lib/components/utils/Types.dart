@@ -147,3 +147,82 @@ List<MBInfo> mBDeviceTypes = [
     icon: "more_horiz",
   ),
 ];
+
+List<MBInfo> mBPatientStatus = [
+  MBInfo(
+    display: "Invited",
+    description: "Patient has been invited but not yet linked their account",
+    code: "invited",
+    color: getMBColorByName("Slate"),
+    icon: "person_add",
+  ),
+  MBInfo(
+    display: "Linked",
+    description: "Patient has successfully linked their account",
+    code: "linked",
+    color: getMBColorByName("Health"),
+    icon: "link",
+  ),
+];
+
+List<MBInfo> mBDeviceStatus = [
+  MBInfo(
+    display: "Idle",
+    description: "Device is powered on but not actively collecting data",
+    code: "idle",
+    color: getMBColorByName("Slate"),
+    icon: "power_settings_new",
+  ),
+  MBInfo(
+    display: "Ready",
+    description: "Device is ready to start collecting data",
+    code: "ready",
+    color: getMBColorByName("Health"),
+    icon: "check_circle",
+  ),
+  MBInfo(
+    display: "Running",
+    description: "Device is actively collecting data",
+    code: "running",
+    color: getMBColorByName("Munsell"),
+    icon: "play_circle",
+  ),
+  MBInfo(
+    display: "Stopped",
+    description: "Device has stopped collecting data",
+    code: "stopped",
+    color: getMBColorByName("Crayola"),
+    icon: "stop_circle",
+  ),
+  MBInfo(
+    display: "Reset",
+    description: "Device is resetting",
+    code: "reset",
+    color: getMBColorByName("Amber"),
+    icon: "restart_alt",
+  ),
+  MBInfo(
+    display: "Offline",
+    description: "Device is not connected",
+    code: "offline",
+    color: getMBColorByName("Slate"),
+    icon: "cloud_off",
+  ),
+];
+
+List<MBInfo> mBRegistrationStatus = [
+  MBInfo(
+    display: "Registered",
+    description: "Device is registered and ready to use",
+    code: "registered",
+    color: getMBColorByName("Health"),
+    icon: "verified",
+  ),
+  MBInfo(
+    display: "Needs to Register",
+    description: "Device needs to be registered before use",
+    code: "unregistered",
+    color: getMBColorByName("Crayola"),
+    icon: "warning",
+  ),
+];

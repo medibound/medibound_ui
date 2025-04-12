@@ -4,7 +4,7 @@ import 'package:medibound_ui/components/theme.dart';
 import 'package:medibound_ui/components/utils/Info.dart';
 import 'package:medibound_ui/medibound_ui.dart';
 
-class MBDropdown extends StatelessWidget {
+class MBDropdown extends StatefulWidget {
   final List<MBInfo> items;
   final MBInfo? selectedItem;
   final Function(MBInfo?) onChanged;
@@ -22,6 +22,19 @@ class MBDropdown extends StatelessWidget {
     this.isEnabled = true,
   }) : super(key: key);
 
+  @override
+  State<MBDropdown> createState() => _MBDropdownState();
+}
+
+class _MBDropdownState extends State<MBDropdown> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedItem != null) {
+      widget.onChanged(widget.selectedItem);
+    }
+  }
+
   Color _getBackgroundColor(MBInfo item, BuildContext context) {
     final baseColor = item.color ?? FlutterFlowTheme.of(context).secondary;
     return baseColor.withOpacity(0.1);
@@ -31,23 +44,25 @@ class MBDropdown extends StatelessWidget {
     return item.color ?? FlutterFlowTheme.of(context).secondary;
   }
 
+  
   Widget _buildItemRow(MBInfo item, BuildContext context) {
+
     return Row(
       children: [
-        if (item.icon != null || item.color != null) ...[
+        if ((item.icon != null && item.icon != "") || item.color != null) ...[
           Container(
             width: 30,
             height: 30,
-            decoration: item.icon != null ? BoxDecoration(
+            decoration: item.icon != null && item.icon != "" ? BoxDecoration(
               color: _getBackgroundColor(item, context),
               borderRadius: BorderRadius.circular(5),
             ) : BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(5),
             ),
-            child: item.icon != null
+            child: item.icon != null && item.icon != ""
                 ? Icon(
-                    iconsMap[item.icon]!,
+                    iconsMap[item.icon] ?? Icons.question_mark,
                     color: _getIconColor(item, context),
                   )
                 : Center(
@@ -74,6 +89,8 @@ class MBDropdown extends StatelessWidget {
               ),
               Text(
                 item.description,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: FlutterFlowTheme.of(context).labelSmall.copyWith(height: 1),
               ),
             ],
@@ -85,6 +102,9 @@ class MBDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    
+
     return Container(
       height: 50,
       decoration: BoxDecoration(
@@ -92,14 +112,14 @@ class MBDropdown extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownSearch<MBInfo>(
-        items: items,
-        selectedItem: selectedItem,
-        onChanged: onChanged,
-        enabled: isEnabled,
+        items: widget.items,
+        selectedItem: widget.selectedItem,
+        onChanged: widget.onChanged,
+        enabled: widget.isEnabled,
         filterFn: (item, filter) => 
           item.display.toLowerCase().contains(filter.toLowerCase()),
         popupProps: PopupProps.menu(
-          showSearchBox: showSearchBox,
+          showSearchBox: widget.showSearchBox,
           fit: FlexFit.loose,
           constraints: const BoxConstraints(maxHeight: 400),
           searchFieldProps: TextFieldProps(
@@ -138,7 +158,7 @@ class MBDropdown extends StatelessWidget {
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
-            hintText: hintText ?? "Select an option",
+            hintText: widget.hintText ?? "Select an option",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide.none,
@@ -152,8 +172,8 @@ class MBDropdown extends StatelessWidget {
         dropdownBuilder: (context, item) {
           if (item == null) {
             return Text(
-              hintText ?? "Select an option",
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
+              widget.hintText ?? "Select an option",
+              style: TextStyle(color: Colors.grey[600], fontSize: 14),
             );
           }
           return Container(
