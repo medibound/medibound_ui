@@ -264,7 +264,7 @@ extension MBTickerTypeExtension on MBTickerType {
       display: "Sum",
       code: "sum",
       description: "Shows the total of all values",
-      icon: "add",
+      icon: "functions",
       color: getMBColorByName('Slate'),
     ),
   };
