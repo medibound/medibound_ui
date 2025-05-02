@@ -10,7 +10,7 @@ import 'package:medibound_ui/components/graphs/number/quarter/ChecklistProgressG
 import 'package:medibound_ui/components/graphs/number/half/ECGGraph.dart';
 import 'package:medibound_ui/components/graphs/string/LabelGraph.dart';
 import 'package:medibound_ui/components/graphs/string/LabelModeGraph.dart';
-import '../components/graph_types.dart';
+import 'utils/ComponentTypes.dart';
 import '../components/graph_widget.dart';
 import 'graphs/number/half/BubbleGraph.dart';
 import 'graphs/number/half/CandleStickGraph.dart';

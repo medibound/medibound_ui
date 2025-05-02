@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/tickers/StaticTicker.dart';
 import 'package:medibound_ui/components/tickers/TrendTicker.dart';
 import 'package:medibound_ui/medibound_ui.dart';
-import 'graph_types.dart';
+import 'utils/ComponentTypes.dart';
 import 'dart:math' as math;
 
 class ProcessedTickerData extends StatelessWidget {

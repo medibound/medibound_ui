@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
 import 'package:medibound_ui/components/utils/processed_label_data.dart';
 import 'package:medibound_ui/components/theme.dart';
-import '../../graph_types.dart';
+import '../../utils/ComponentTypes.dart';
 import '../../graph_widget.dart';
 
 class LabelModeGraph extends GraphWidget {

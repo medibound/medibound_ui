@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import '../graph_types.dart';
+import 'ComponentTypes.dart';
 
 class ProcessedNumberData {
   final List<ChartData> chartData;

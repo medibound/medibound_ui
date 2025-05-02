@@ -3,7 +3,7 @@ import 'package:medibound_ui/components/inputs/Dropdown.dart';
 import 'package:medibound_ui/components/inputs/ProgressFlow.dart';
 import 'package:medibound_ui/components/theme.dart';
 import 'package:medibound_ui/medibound_ui.dart';
-import './components/graph_types.dart';
+import 'components/utils/ComponentTypes.dart';
 import './components/widget_registry.dart';
 import './components/inputs/ProfileDropdown.dart';
 import './components/utils/Profile.dart';

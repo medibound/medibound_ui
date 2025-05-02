@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medibound_ui/components/graph_types.dart';
+import 'package:medibound_ui/components/utils/ComponentTypes.dart';
 import 'package:medibound_ui/components/graph_widget.dart';
 import 'package:medibound_ui/components/utils/processed_number_data.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';

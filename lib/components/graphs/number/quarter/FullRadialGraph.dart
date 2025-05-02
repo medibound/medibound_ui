@@ -3,7 +3,7 @@ import 'package:medibound_ui/components/utils/processed_number_data.dart';
 import 'package:medibound_ui/components/theme.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import '../../../graph_types.dart';
+import '../../../utils/ComponentTypes.dart';
 import '../../../graph_widget.dart';
 
 class FullRadialGraph extends GraphWidget {

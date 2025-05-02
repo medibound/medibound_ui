@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/theme.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
-import '../graph_types.dart';
+import '../utils/ComponentTypes.dart';
 
 class StaticTicker extends StatelessWidget {
   final BuildContext context;

@@ -16,7 +16,7 @@ export 'components/utils/IconsFT.dart';
 export 'components/inputs/Dropdown.dart';
 export 'components/inputs/ProfileDropdown.dart';
 export 'components/inputs/ProgressFlow.dart';
-export 'components/graph_types.dart';
+export 'components/utils/ComponentTypes.dart';
 export 'components/widget_registry.dart';
 
 // Regulatory components

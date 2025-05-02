@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/theme.dart';
-import '../../../graph_types.dart';
+import '../../../utils/ComponentTypes.dart';
 import '../../../graph_widget.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 

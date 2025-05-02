@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medibound_ui/components/utils/IconsFT.dart';
-import '../graph_types.dart';
+import 'ComponentTypes.dart';
 
 class ProcessedLabelData {
   final String label;

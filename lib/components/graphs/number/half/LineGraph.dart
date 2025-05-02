@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../graph_types.dart';
+import '../../../utils/ComponentTypes.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../../graph_widget.dart';
 

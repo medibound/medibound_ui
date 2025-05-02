@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../components/layouts/HalfSize.dart';
 import '../components/layouts/QuarterSize.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'graph_types.dart';
+import 'utils/ComponentTypes.dart';
 import 'utils/processed_number_data.dart';
 import 'ticker_data_processing.dart';
 
