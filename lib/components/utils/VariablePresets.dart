@@ -193,7 +193,7 @@ List<MBVariablePreset> mBVariablePresets = [
     description: "The user's custom data with more options.",
     code: "customProfile",
     color: getMBColorByName("Slate"),
-    icon: "person",
+    icon: "tune",
     type: "custom",
     unit: "{none}",
   ),
