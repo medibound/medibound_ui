@@ -50,12 +50,24 @@ ProcessedNumberData processNumberData(
   final DateTime now = referenceTime;
 
   final List<PointData> parsedPoints = points.map<PointData>((data) {
+    double numberValue = 0.0;
+    
+    // Parse the data field which now stores values as string
+    if (data['data'] != null) {
+      try {
+        numberValue = double.parse(data['data']);
+      } catch (e) {
+        // If parsing fails, default to 0
+        numberValue = 0.0;
+      }
+    }
+    
     return PointData(
-      number: (data['number']?.toDouble() ?? 0.0).clamp(0, double.infinity),
+      number: numberValue.clamp(0, double.infinity),
       timestamp: data['timestamp'] is String
           ? DateTime.parse(data['timestamp'])
           : (data['timestamp'] is DateTime ? data['timestamp'] : now),
-      label: data['string'] ?? "",
+      label: data['data'] ?? "",
     );
   }).toList();
 
@@ -67,12 +79,13 @@ ProcessedNumberData processNumberData(
       ? parsedPoints.map((p) => p.number).reduce((a, b) => a > b ? a : b)
       : 0.0; // Default max if no points exist
 
-// Check if `range` exists and contains valid values
-  if (variable["range"] != null &&
-      variable["range"]['lower_bound'] != null &&
-      variable["range"]['upper_bound'] != null) {
-    double tempMin = variable["range"]['lower_bound'].toDouble();
-    double tempMax = variable["range"]['upper_bound'].toDouble();
+  // Check if options.range exists and contains valid lower and upper values
+  if (variable["options"] != null && 
+      variable["options"]["range"] != null &&
+      variable["options"]["range"]["lower"] != null &&
+      variable["options"]["range"]["upper"] != null) {
+    double tempMin = variable["options"]["range"]["lower"].toDouble();
+    double tempMax = variable["options"]["range"]["upper"].toDouble();
 
     // Ensure valid range
     if (tempMin < tempMax) {
@@ -81,7 +94,7 @@ ProcessedNumberData processNumberData(
     }
   }
 
-// Final check: if `minY` is not less than `maxY`, reset `minY` to 0
+  // Final check: if `minY` is not less than `maxY`, reset `minY` to 0
   if (minY >= maxY) {
     minY = 0.0;
   }

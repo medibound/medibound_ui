@@ -1,23 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/utils/Colors.dart';
 
-class MBRange {
-  final double lowerBound;
-  final double upperBound;
-
-  MBRange({
-    required this.lowerBound,
-    required this.upperBound,
-  });
-}
-
 class MBVariablePreset {
   final String display;
   final String description;
   final String code;
   final Color color;
   final String icon;
-  final MBRange? range;
+  final dynamic options;
   final String type;
   final String unit;
 
@@ -27,7 +17,7 @@ class MBVariablePreset {
     required this.code,
     required this.color,
     required this.icon,
-    this.range,
+    this.options,
     required this.type,
     required this.unit
   });
@@ -58,7 +48,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bloodGlucose",
     color: getMBColorByName("Munsell"),
     icon: "bloodtype",
-    range: MBRange(lowerBound: 70.0, upperBound: 200.0),
+    options: {
+      "range": {
+        "lower": 70.0,
+        "upper": 200.0
+      }
+    },
     type: "number",
     unit: "mg/dL",
   ),
@@ -68,7 +63,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bloodOxygen",
     color: getMBColorByName("Health"),
     icon: "air",
-    range: MBRange(lowerBound: 0.0, upperBound: 100.0),
+    options: {
+      "range": {
+        "lower": 0.0,
+        "upper": 100.0
+      }
+    },
     type: "number",
     unit: "%",
   ),
@@ -78,7 +78,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bloodPressureDiastolic",
     color: getMBColorByName("Midnight"),
     icon: "monitor_heart",
-    range: MBRange(lowerBound: 60.0, upperBound: 90.0),
+    options: {
+      "range": {
+        "lower": 60.0,
+        "upper": 90.0
+      }
+    },
     type: "number",
     unit: "mm[Hg]",
   ),
@@ -88,7 +93,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bloodPressureSystolic",
     color: getMBColorByName("Crystal"),
     icon: "monitor_heart",
-    range: MBRange(lowerBound: 90.0, upperBound: 140.0),
+    options: {
+      "range": {
+        "lower": 90.0,
+        "upper": 140.0
+      }
+    },
     type: "number",
     unit: "mm[Hg]",
   ),
@@ -98,7 +108,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bodyFatPercentage",
     color: getMBColorByName("Slate"),
     icon: "fitness_center",
-    range: MBRange(lowerBound: 0.0, upperBound: 100.0),
+    options: {
+      "range": {
+        "lower": 0.0,
+        "upper": 100.0
+      }
+    },
     type: "number",
     unit: "%",
   ),
@@ -108,7 +123,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bodyMassIndex",
     color: getMBColorByName("Midnight"),
     icon: "scale",
-    range: MBRange(lowerBound: 18.5, upperBound: 30.0),
+    options: {
+      "range": {
+        "lower": 18.5,
+        "upper": 30.0
+      }
+    },
     type: "number",
     unit: "{none}",
   ),
@@ -118,7 +138,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "bodyTemperature",
     color: getMBColorByName("Amber"),
     icon: "thermostat",
-    range: MBRange(lowerBound: 30.0, upperBound: 50.0),
+    options: {
+      "range": {
+        "lower": 30.0,
+        "upper": 50.0
+      }
+    },
     type: "number",
     unit: "Cel",
   ),
@@ -128,7 +153,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "heartRate",
     color: getMBColorByName("Crayola"),
     icon: "favorite",
-    range: MBRange(lowerBound: 40.0, upperBound: 180.0),
+    options: {
+      "range": {
+        "lower": 40.0,
+        "upper": 180.0
+      }
+    },
     type: "number",
     unit: "/min",
   ),
@@ -138,7 +168,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "respiratoryRate",
     color: getMBColorByName("Munsell"),
     icon: "lungs",
-    range: MBRange(lowerBound: 10.0, upperBound: 30.0),
+    options: {
+      "range": {
+        "lower": 10.0,
+        "upper": 30.0
+      }
+    },
     type: "number",
     unit: "/min",
   ),
@@ -148,7 +183,12 @@ List<MBVariablePreset> mBVariablePresets = [
     code: "restingHeartRate",
     color: getMBColorByName("Midnight"),
     icon: "self_improvement",
-    range: MBRange(lowerBound: 40.0, upperBound: 100.0),
+    options: {
+      "range": {
+        "lower": 40.0,
+        "upper": 100.0
+      }
+    },
     type: "number",
     unit: "/min",
   ),

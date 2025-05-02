@@ -35,33 +35,34 @@ Map<String, dynamic> mockVariable = {
       "unit": "bpm",
       "type": "number",
       "is_list": true,
-      /*"range": {
-        "lower_bound": 0,
-        "upper_bound": 50,
-      },*/
+      "options": {
+        "range": {
+          "lower": 0,
+          "upper": 50,
+        }
+      },
       "data": [
-        {"number": 0.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 0)).toIso8601String()},
-    {"number": 15.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 3)).toIso8601String()},
-    {"number": 30.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 6)).toIso8601String()},
-    {"number": 41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 9)).toIso8601String()},
-    {"number": 48.2, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 12)).toIso8601String()},
-    {"number": 49.9, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 15)).toIso8601String()},
-    {"number": 46.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 18)).toIso8601String()},
-    {"number": 38.3, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 21)).toIso8601String()},
-    {"number": 26.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
-    {"number": 11.1, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 27)).toIso8601String()},
-    {"number": -5.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 30)).toIso8601String()},
-    {"number": -20.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 33)).toIso8601String()},
-    {"number": -33.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 36)).toIso8601String()},
-    {"number": -41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 39)).toIso8601String()},
-    {"number": -45.8, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 42)).toIso8601String()},
-    {"number": -45.8, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 45)).toIso8601String()},
-    {"number": -41.4, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 48)).toIso8601String()},
-    {"number": -33.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 51)).toIso8601String()},
-    {"number": -20.7, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 54)).toIso8601String()},
-        {"number": 26.0, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
-
-    {"number": -5.5, "string": "Sine Wave", "timestamp": DateTime.now().subtract(Duration(minutes: 57)).toIso8601String()},
+        {"data": "0.0", "timestamp": DateTime.now().subtract(Duration(minutes: 0)).toIso8601String()},
+        {"data": "15.7", "timestamp": DateTime.now().subtract(Duration(minutes: 3)).toIso8601String()},
+        {"data": "30.0", "timestamp": DateTime.now().subtract(Duration(minutes: 6)).toIso8601String()},
+        {"data": "41.4", "timestamp": DateTime.now().subtract(Duration(minutes: 9)).toIso8601String()},
+        {"data": "48.2", "timestamp": DateTime.now().subtract(Duration(minutes: 12)).toIso8601String()},
+        {"data": "49.9", "timestamp": DateTime.now().subtract(Duration(minutes: 15)).toIso8601String()},
+        {"data": "46.5", "timestamp": DateTime.now().subtract(Duration(minutes: 18)).toIso8601String()},
+        {"data": "38.3", "timestamp": DateTime.now().subtract(Duration(minutes: 21)).toIso8601String()},
+        {"data": "26.0", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
+        {"data": "11.1", "timestamp": DateTime.now().subtract(Duration(minutes: 27)).toIso8601String()},
+        {"data": "-5.5", "timestamp": DateTime.now().subtract(Duration(minutes: 30)).toIso8601String()},
+        {"data": "-20.7", "timestamp": DateTime.now().subtract(Duration(minutes: 33)).toIso8601String()},
+        {"data": "-33.0", "timestamp": DateTime.now().subtract(Duration(minutes: 36)).toIso8601String()},
+        {"data": "-41.4", "timestamp": DateTime.now().subtract(Duration(minutes: 39)).toIso8601String()},
+        {"data": "-45.8", "timestamp": DateTime.now().subtract(Duration(minutes: 42)).toIso8601String()},
+        {"data": "-45.8", "timestamp": DateTime.now().subtract(Duration(minutes: 45)).toIso8601String()},
+        {"data": "-41.4", "timestamp": DateTime.now().subtract(Duration(minutes: 48)).toIso8601String()},
+        {"data": "-33.0", "timestamp": DateTime.now().subtract(Duration(minutes: 51)).toIso8601String()},
+        {"data": "-20.7", "timestamp": DateTime.now().subtract(Duration(minutes: 54)).toIso8601String()},
+        {"data": "26.0", "timestamp": DateTime.now().subtract(Duration(minutes: 24)).toIso8601String()},
+        {"data": "-5.5", "timestamp": DateTime.now().subtract(Duration(minutes: 57)).toIso8601String()},
       ],
     };
 
@@ -95,10 +96,10 @@ Widget getWidget(
   String widgetType,
   Color color,  // ✅ Changed to String // ✅ Changed to String
   String graphSizeStr,
-  DateTime referenceTime,   // ✅ Changed to String
-  {String timeWindowStr = 'auto', String tickerTypeStr = 'last', double height = 100, dynamic variable}
+  DateTime referenceTime, 
+   dynamic variable , // ✅ Changed to String
+  {String timeWindowStr = 'auto', String tickerTypeStr = 'last', double height = 100,}
 ) {
-  variable ??= mockVariable;
 
   // ✅ Convert Strings to Enums
   MBTimeWindow? timeWindow = stringToTimeWindow(timeWindowStr);

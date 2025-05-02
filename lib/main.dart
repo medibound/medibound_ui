@@ -122,8 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Generate a realistic heart rate between 60-100 with some variation
       double value = 80 + (index % 5) * 3 - (index % 7) * 2;
       return {
-        "number": value,
-        "string": "Heart Rate",
+        "data": value.toString(),
         "timestamp": DateTime.now().subtract(Duration(minutes: index * 3)).toIso8601String()
       };
     }),
@@ -144,8 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Generate realistic SpO2 values (normally 95-100%)
       double value = 98 - (index % 8) * 0.5;
       return {
-        "number": value,
-        "string": "SpO2",
+        "data": value.toString(),
         "timestamp": DateTime.now().subtract(Duration(minutes: index * 4)).toIso8601String()
       };
     }),
@@ -166,8 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Generate realistic body temperature (normal is about 37°C)
       double value = 36.6 + (index % 5) * 0.2 - (index % 3) * 0.1;
       return {
-        "number": value,
-        "string": "Temperature",
+        "data": value.toString(),
         "timestamp": DateTime.now().subtract(Duration(hours: index)).toIso8601String()
       };
     }),
@@ -190,8 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
       double noise = (index % 7) * 0.1 - (index % 5) * 0.1;
       double value = baseValue + noise;
       return {
-        "number": value,
-        "string": "ECG",
+        "data": value.toString(),
         "timestamp": DateTime.now().subtract(Duration(seconds: index * 1)).toIso8601String()
       };
     }),
@@ -212,8 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Generate realistic compliance data with some variation
       double value = 85 + (index % 3) * 5 - (index % 5) * 8;
       return {
-        "number": value,
-        "string": "Compliance",
+        "data": value.toString(),
         "timestamp": DateTime.now().subtract(Duration(days: index)).toIso8601String()
       };
     }),
@@ -233,8 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "is_list": false,
     "data": [
       {
-        "number": 2, // Representing 3rd stage (Shipped)
-        "string": "Shipped",
+        "data": "2", // Representing 3rd stage (Shipped)
         "timestamp": DateTime.now().toIso8601String()
       }
     ],
@@ -390,8 +384,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 150,
-              child: getWidget('ChecklistProgress', Colors.teal, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: orderStatusData),
+              child: getWidget('ChecklistProgress', Colors.teal, 'half', DateTime.now(), orderStatusData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -400,8 +394,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('ECG', Colors.green, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: ecgData),
+              child: getWidget('ECG', Colors.green, 'half', DateTime.now(),ecgData ,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 40),
 
@@ -422,8 +416,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('Line', Colors.blue, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('Line', Colors.blue, 'half', DateTime.now(),heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -432,8 +426,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('Column', Colors.teal, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('Column', Colors.teal, 'half', DateTime.now(), heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -442,8 +436,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('FastLine', Colors.amber, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('FastLine', Colors.amber, 'half', DateTime.now(), heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -452,8 +446,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('StepLine', Colors.indigo, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('StepLine', Colors.indigo, 'half', DateTime.now(), heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -462,8 +456,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('Scatter', Colors.deepOrange, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('Scatter', Colors.deepOrange, 'half', DateTime.now(), heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -472,8 +466,8 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 8),
             Container(
               height: 300,
-              child: getWidget('Bubble', Colors.pink, 'half', DateTime.now(),
-                  timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+              child: getWidget('Bubble', Colors.pink, 'half', DateTime.now(), heartRateData,
+                  timeWindowStr: selectedTimeWindow.name),
             ),
             const SizedBox(height: 24),
 
@@ -492,15 +486,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('Radial', Colors.cyan, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('Radial', Colors.cyan, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('RadialHorizontal', Colors.deepPurple, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('RadialHorizontal', Colors.deepPurple, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
               ],
@@ -515,15 +509,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('RadialIcon', Colors.brown, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('RadialIcon', Colors.brown, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('LinearGuage', Colors.lime, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('LinearGuage', Colors.lime, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
               ],
@@ -538,15 +532,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('Number', Colors.green, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('Number', Colors.green, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('NumberSplit', Colors.blueGrey, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('NumberSplit', Colors.blueGrey, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
               ],
@@ -561,15 +555,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('FullRadial', Colors.teal, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('FullRadial', Colors.teal, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     height: 200,
-                    child: getWidget('LabelGraph', Colors.indigo, 'quarter', DateTime.now(),
-                        timeWindowStr: selectedTimeWindow.name, variable: heartRateData),
+                    child: getWidget('LabelGraph', Colors.indigo, 'quarter', DateTime.now(), heartRateData,
+                        timeWindowStr: selectedTimeWindow.name),
                   ),
                 ),
               ],
