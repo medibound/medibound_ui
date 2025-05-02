@@ -102,7 +102,7 @@ List<MBInfo> mBDeviceTypes = [
     description: "Wearables",
     code: "DT05",
     color: getMBColorByName("Slate"),
-    icon: "directions_run",
+    icon: "directions_run_rounded",
   ),
   MBInfo(
     display: "Sleep Monitors",
