@@ -32,7 +32,9 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
   void initState() {
     super.initState();
     if (widget.selectedItem != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onChanged(widget.selectedItem);
+    });
     }
   }
 
@@ -62,7 +64,7 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
             children: [
               Text(
                 profile.display,
-                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(height: 1.1, fontWeight: FontWeight.w500),
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(height: 1.1, fontWeight: FontWeight.w600),
               ),
               Text(
                 profile.description,
@@ -80,7 +82,7 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      height: 40,
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(10),
@@ -90,12 +92,14 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
         selectedItem: widget.selectedItem,
         onChanged: widget.onChanged,
         enabled: widget.isEnabled,
+        
         filterFn: (item, filter) => 
           item.display.toLowerCase().contains(filter.toLowerCase()),
         popupProps: PopupProps.menu(
           showSearchBox: widget.showSearchBox,
           fit: FlexFit.loose,
           constraints: const BoxConstraints(maxHeight: 400),
+          showSelectedItems: false,
           searchFieldProps: TextFieldProps(
             decoration: InputDecoration(
               hintText: "Search...",
@@ -115,18 +119,53 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
             borderRadius: BorderRadius.circular(10),
           ),
           containerBuilder: (context, popupWidget) {
-            return Container(
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                borderRadius: BorderRadius.circular(10),
+            return AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: 1.0,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: popupWidget,
+                  ),
+                ),
               ),
-              child: popupWidget,
             );
           },
           itemBuilder: (context, item, isSelected) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: _buildItemRow(item, context),
+            return Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  // Handle item selection (built-in in the dropdown_search)
+                },
+                hoverColor: FlutterFlowTheme.of(context).primary.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: isSelected 
+                        ? FlutterFlowTheme.of(context).primary.withOpacity(0.1)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: _buildItemRow(item, context),
+                ),
+              ),
             );
           },
         ),

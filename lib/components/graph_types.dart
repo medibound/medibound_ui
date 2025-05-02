@@ -1,4 +1,7 @@
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import 'package:medibound_ui/medibound_ui.dart';
+
 
 enum MBTimeWindow {
   lastMinute,
@@ -13,19 +16,76 @@ enum MBTimeWindow {
 }
 
 extension MBTimeWindowExtension on MBTimeWindow {
-  static const Map<MBTimeWindow, String> _names = {
-    MBTimeWindow.lastMinute: "Last 1m",
-    MBTimeWindow.last15Minutes: "Last 15m",
-    MBTimeWindow.lastHour: "Last 1hr",
-    MBTimeWindow.last24Hours: "Last 24hrs",
-    MBTimeWindow.last7Days: "Last 7d",
-    MBTimeWindow.last30Days: "Last 30d",
-    MBTimeWindow.pastYear: "Past 1yr",
-    MBTimeWindow.auto: "Auto",
-    MBTimeWindow.none: "None",
+  static Map<MBTimeWindow, MBInfo> _values = {
+    MBTimeWindow.lastMinute: MBInfo(
+      display: "Last 1m",
+      code: "lastMinute",
+      description: "Data from the last minute",
+      icon: "timer",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.last15Minutes: MBInfo(
+      display: "Last 15m",
+      code: "last15Minutes",
+      description: "Data from the last 15 minutes",
+      icon: "timelapse",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.lastHour: MBInfo(
+      display: "Last 1hr",
+      code: "lastHour",
+      description: "Data from the last hour",
+      icon: "hourglass_top",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.last24Hours: MBInfo(
+      display: "Last 24hrs",
+      code: "last24Hours",
+      description: "Data from the last 24 hours",
+      icon: "access_time",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.last7Days: MBInfo(
+      display: "Last 7d",
+      code: "last7Days",
+      description: "Data from the last 7 days",
+      icon: "date_range",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.last30Days: MBInfo(
+      display: "Last 30d",
+      code: "last30Days",
+      description: "Data from the last 30 days",
+      icon: "calendar_month",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.pastYear: MBInfo(
+      display: "Past 1yr",
+      code: "pastYear",
+      description: "Data from the past year",
+      icon: "calendar_today",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.auto: MBInfo(
+      display: "Auto",
+      code: "auto",
+      description: "Automatically select time window based on data",
+      icon: "auto_awesome",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTimeWindow.none: MBInfo(
+      display: "None",
+      code: "none",
+      description: "No time window filter",
+      icon: "all_inclusive",
+      color: getMBColorByName('Slate'),
+    ),
   };
 
-  String get displayName => _names[this]!;
+  MBInfo get value => _values[this]!;
+  String get displayName => value.display;
+  String get description => value.description;
+  IconData get icon => iconsMap[value.icon]!;
 
   static MBTimeWindow getAutoWindow(
       MBTimeWindow timeWindow, List<PointData> parsedPoints) {
@@ -80,63 +140,150 @@ class MbParsedData {
 enum MBGraphSize { quarter, half, none }
 
 extension MBGraphSizeExtension on MBGraphSize {
-  static const Map<MBGraphSize, String> _names = {
-    MBGraphSize.quarter: "Quarter Size",
-    MBGraphSize.half: "Half Size",
-    MBGraphSize.none: "None",
+  static Map<MBGraphSize, MBInfo> _values = {
+    MBGraphSize.quarter: MBInfo(
+      display: "Quarter Size",
+      code: "quarter",
+      description: "Graph takes up a quarter of the available space",
+      icon: "grid_view",
+      color: getMBColorByName('Slate'),
+    ),
+    MBGraphSize.half: MBInfo(
+      display: "Half Size",
+      code: "half",
+      description: "Graph takes up half of the available space",
+      icon: "view_agenda",
+      color: getMBColorByName('Slate'),
+    ),
+    MBGraphSize.none: MBInfo(
+      display: "None",
+      code: "none",
+      description: "Graph has no fixed size",
+      icon: "aspect_ratio",
+      color: getMBColorByName('Slate'),
+    ),
   };
 
-  String get displayName => _names[this]!;
+  MBInfo get value => _values[this]!;
+  String get displayName => value.display;
+  String get description => value.description;
+  IconData get icon => iconsMap[value.icon]!;
 }
 
 /// Variable types that graphs accept
 enum MBVariableType { number, string }
 
 extension MBVariableTypeExtension on MBVariableType {
-  static const Map<MBVariableType, String> _names = {
-    MBVariableType.number: "Number",
-    MBVariableType.string: "Label",
+  static Map<MBVariableType, MBInfo> _values = {
+    MBVariableType.number: MBInfo(
+      display: "Number",
+      code: "number",
+      description: "Numeric data type for quantitative values",
+      icon: "numbers",
+      color: getMBColorByName('Slate'),
+    ),
+    MBVariableType.string: MBInfo(
+      display: "Label",
+      code: "string",
+      description: "Text data type for categorical values",
+      icon: "text_fields",
+      color: getMBColorByName('Slate'),
+    ),
   };
 
-  String get displayName => _names[this]!;
+  MBInfo get value => _values[this]!;
+  String get displayName => value.display;
+  String get description => value.description;
+  IconData get icon => iconsMap[value.icon]!;
 }
 
 /// Determines if graph accepts a single value or an array
 enum MBVariableForm { singleton, array }
 
 extension MBVariableFormExtension on MBVariableForm {
-  static const Map<MBVariableForm, String> _names = {
-    MBVariableForm.singleton: "Singleton",
-    MBVariableForm.array: "Array",
+  static Map<MBVariableForm, MBInfo> _values = {
+    MBVariableForm.singleton: MBInfo(
+      display: "Singleton",
+      code: "singleton",
+      description: "Graph accepts a single value",
+      icon: "filter_1",
+      color: getMBColorByName('Slate'),
+    ),
+    MBVariableForm.array: MBInfo(
+      display: "Array",
+      code: "array",
+      description: "Graph accepts an array of values",
+      icon: "view_list",
+      color: getMBColorByName('Slate'),
+    ),
   };
 
-  String get displayName => _names[this]!;
+  MBInfo get value => _values[this]!;
+  String get displayName => value.display;
+  String get description => value.description;
+  IconData get icon => iconsMap[value.icon]!;
 }
 
 enum MBTickerType { last, first, mean, std, min, max, sum }
 
 extension MBTickerTypeExtension on MBTickerType {
-  static const Map<MBTickerType, String> _names = {
-    MBTickerType.last: "Last",
-    MBTickerType.first: "First",
-    MBTickerType.mean: "Mean",
-    MBTickerType.std: "Standard Deviation",
-    MBTickerType.min: "Minimum",
-    MBTickerType.max: "Maximum",
-    MBTickerType.sum: "Sum",
+  static Map<MBTickerType, MBInfo> _values = {
+    MBTickerType.last: MBInfo(
+      display: "Last",
+      code: "last",
+      description: "Shows the last value in the dataset",
+      icon: "last_page",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.first: MBInfo(
+      display: "First",
+      code: "first",
+      description: "Shows the first value in the dataset",
+      icon: "first_page",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.mean: MBInfo(
+      display: "Mean",
+      code: "mean",
+      description: "Shows the average of all values",
+      icon: "calculate",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.std: MBInfo(
+      display: "Standard Deviation",
+      code: "std",
+      description: "Shows how spread out the values are",
+      icon: "show_chart",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.min: MBInfo(
+      display: "Minimum",
+      code: "min",
+      description: "Shows the smallest value in the dataset",
+      icon: "arrow_downward",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.max: MBInfo(
+      display: "Maximum",
+      code: "max",
+      description: "Shows the largest value in the dataset",
+      icon: "arrow_upward",
+      color: getMBColorByName('Slate'),
+    ),
+    MBTickerType.sum: MBInfo(
+      display: "Sum",
+      code: "sum",
+      description: "Shows the total of all values",
+      icon: "add",
+      color: getMBColorByName('Slate'),
+    ),
   };
 
-  static const Map<MBTickerType, String> _shortened = {
-    MBTickerType.last: "Last",
-    MBTickerType.first: "First",
-    MBTickerType.mean: "Mean",
-    MBTickerType.std: "Std",
-    MBTickerType.min: "Min",
-    MBTickerType.max: "Max",
-    MBTickerType.sum: "Sum",
-  };
-
-  String get shortenedDisplayName => _shortened[this]!;
+  MBInfo get value => _values[this]!;
+  String get displayName => value.display;
+  String get description => value.description;
+  IconData get icon => iconsMap[value.icon]!;
+  String get shortenedDisplayName => value.display.split(" ").first;
 
   static MbParsedData getValue(MBTickerType tickerType, List<ChartData> data) {
     if (data.isEmpty) {

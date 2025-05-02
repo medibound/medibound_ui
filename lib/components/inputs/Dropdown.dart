@@ -31,7 +31,9 @@ class _MBDropdownState extends State<MBDropdown> {
   void initState() {
     super.initState();
     if (widget.selectedItem != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.onChanged(widget.selectedItem);
+    });
     }
   }
 
@@ -85,7 +87,7 @@ class _MBDropdownState extends State<MBDropdown> {
             children: [
               Text(
                 item.display,
-                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(height: 1.1, fontWeight: FontWeight.w500),
+                style: FlutterFlowTheme.of(context).bodyMedium.copyWith(height: 1.1, fontWeight: FontWeight.w600),
               ),
               Text(
                 item.description,
@@ -106,7 +108,7 @@ class _MBDropdownState extends State<MBDropdown> {
     
 
     return Container(
-      height: 50,
+      height: 40,
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(10),
@@ -122,6 +124,7 @@ class _MBDropdownState extends State<MBDropdown> {
           showSearchBox: widget.showSearchBox,
           fit: FlexFit.loose,
           constraints: const BoxConstraints(maxHeight: 400),
+          showSelectedItems: false,
           searchFieldProps: TextFieldProps(
             decoration: InputDecoration(
               hintText: "Search...",
@@ -141,12 +144,31 @@ class _MBDropdownState extends State<MBDropdown> {
             borderRadius: BorderRadius.circular(10),
           ),
           containerBuilder: (context, popupWidget) {
-            return Container(
-              decoration: BoxDecoration(
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                borderRadius: BorderRadius.circular(10),
+            return AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: 1.0,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: popupWidget,
+                  ),
+                ),
               ),
-              child: popupWidget,
             );
           },
           itemBuilder: (context, item, isSelected) {

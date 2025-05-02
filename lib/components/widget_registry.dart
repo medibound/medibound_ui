@@ -6,6 +6,8 @@ import 'package:medibound_ui/components/graphs/number/quarter/NumberSplitGraph.d
 import 'package:medibound_ui/components/graphs/number/quarter/RadialGraph.dart';
 import 'package:medibound_ui/components/graphs/number/quarter/RadialHorizontalGraph.dart';
 import 'package:medibound_ui/components/graphs/number/quarter/RadialIconGraph.dart';
+import 'package:medibound_ui/components/graphs/number/quarter/ChecklistProgressGauge.dart';
+import 'package:medibound_ui/components/graphs/number/half/ECGGraph.dart';
 import 'package:medibound_ui/components/graphs/string/LabelGraph.dart';
 import 'package:medibound_ui/components/graphs/string/LabelModeGraph.dart';
 import '../components/graph_types.dart';
@@ -83,6 +85,10 @@ final Map<String, GraphBuilderFunction> widgetRegistry = {
   "FullRadial": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => FullRadialGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
   "LabelGraph": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LabelGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
   "LabelModeGraph": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => LabelModeGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  
+  // Medical Device Visualizations
+  "ECG": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => ECGGraph(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
+  "ChecklistProgress": (variable, color, timeWindow, tickerType, graphSize, height, referenceTime) => ChecklistProgressGauge(variable: variable, color: color, timeWindow: timeWindow, tickerType: tickerType, graphSize: graphSize, height: height, referenceTime: referenceTime),
 };
 
 Widget getWidget(
