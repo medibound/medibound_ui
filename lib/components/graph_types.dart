@@ -143,14 +143,14 @@ extension MBGraphSizeExtension on MBGraphSize {
       display: "Quarter Size",
       code: "quarter",
       description: "Graph takes up a quarter of the available space",
-      icon: "grid_view",
+      icon: "grid_view_rounded",
       color: getMBColorByName('Slate'),
     ),
     MBGraphSize.half: MBInfo(
       display: "Half Size",
       code: "half",
       description: "Graph takes up half of the available space",
-      icon: "view_agenda",
+      icon: "view_agenda_rounded",
       color: getMBColorByName('Slate'),
     ),
     MBGraphSize.none: MBInfo(
