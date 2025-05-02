@@ -27,9 +27,9 @@ class ProcessedTickerData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String timeWindowLabel = timeWindow.displayName;
+    String timeWindowLabel = timeWindow.value.display;
     double value = MBTickerTypeExtension.getValue(tickerType, data).number;
-    String type = tickerType.shortenedDisplayName;
+    String type = tickerType.value.display;
 
     return tickerType == MBTickerType.last || tickerType == MBTickerType.first
         ? TrendTicker(

@@ -120,14 +120,14 @@ class NumberSplitGraph extends GraphWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  newWindow.displayName + " ⋅ ",
+                  newWindow.value.display + " ⋅ ",
                   style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                         fontSize: 10,
                         height: 1,
                       ),
                 ),
                 Text(
-                  tickerType.shortenedDisplayName,
+                  tickerType.value.display,
                   style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                         color: color,
                         fontSize: 10,

@@ -117,7 +117,7 @@ class FullRadialGraph extends GraphWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                    parsedPoints.length > 1 ? newWindow.displayName : "Value",
+                    parsedPoints.length > 1 ? newWindow.value.display : "Value",
                     style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                           fontSize: 8,
                           height: 0.9,

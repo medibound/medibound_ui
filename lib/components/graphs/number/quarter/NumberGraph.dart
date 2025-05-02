@@ -86,14 +86,14 @@ class NumberGraph extends GraphWidget {
               
               children: [
                 Text(
-                  newWindow.displayName + " ⋅ ",
+                  newWindow.value.display + " ⋅ ",
                   style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                         fontSize: 10,
                         height: 0.9,
                       ),
                 ),
                 Text(
-                  tickerType.shortenedDisplayName,
+                  tickerType.value.display,
                   style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                         color: color,
                         fontSize: 10,

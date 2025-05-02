@@ -90,14 +90,14 @@ class RadialHorizontalGraph extends GraphWidget {
                 spacing: 2.5,
                 children: [
                   Text(
-                    newWindow.displayName + " ⋅ ",
+                    newWindow.value.display + " ⋅ ",
                     style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                           fontSize: 8,
                           height: 0.9,
                         ),
                   ),
                   Text(
-                    tickerType.shortenedDisplayName,
+                    tickerType.value.display,
                     style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                           color: color,
                           fontSize: 8,

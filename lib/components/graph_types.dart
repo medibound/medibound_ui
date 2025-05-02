@@ -83,9 +83,7 @@ extension MBTimeWindowExtension on MBTimeWindow {
   };
 
   MBInfo get value => _values[this]!;
-  String get displayName => value.display;
-  String get description => value.description;
-  IconData get icon => iconsMap[value.icon]!;
+
 
   static MBTimeWindow getAutoWindow(
       MBTimeWindow timeWindow, List<PointData> parsedPoints) {
@@ -165,9 +163,6 @@ extension MBGraphSizeExtension on MBGraphSize {
   };
 
   MBInfo get value => _values[this]!;
-  String get displayName => value.display;
-  String get description => value.description;
-  IconData get icon => iconsMap[value.icon]!;
 }
 
 /// Variable types that graphs accept
@@ -192,9 +187,6 @@ extension MBVariableTypeExtension on MBVariableType {
   };
 
   MBInfo get value => _values[this]!;
-  String get displayName => value.display;
-  String get description => value.description;
-  IconData get icon => iconsMap[value.icon]!;
 }
 
 /// Determines if graph accepts a single value or an array
@@ -219,9 +211,7 @@ extension MBVariableFormExtension on MBVariableForm {
   };
 
   MBInfo get value => _values[this]!;
-  String get displayName => value.display;
-  String get description => value.description;
-  IconData get icon => iconsMap[value.icon]!;
+ 
 }
 
 enum MBTickerType { last, first, mean, std, min, max, sum }
@@ -250,21 +240,21 @@ extension MBTickerTypeExtension on MBTickerType {
       color: getMBColorByName('Slate'),
     ),
     MBTickerType.std: MBInfo(
-      display: "Standard Deviation",
+      display: "Std",
       code: "std",
       description: "Shows how spread out the values are",
       icon: "show_chart",
       color: getMBColorByName('Slate'),
     ),
     MBTickerType.min: MBInfo(
-      display: "Minimum",
+      display: "Min",
       code: "min",
       description: "Shows the smallest value in the dataset",
       icon: "arrow_downward",
       color: getMBColorByName('Slate'),
     ),
     MBTickerType.max: MBInfo(
-      display: "Maximum",
+      display: "Max",
       code: "max",
       description: "Shows the largest value in the dataset",
       icon: "arrow_upward",
@@ -280,10 +270,6 @@ extension MBTickerTypeExtension on MBTickerType {
   };
 
   MBInfo get value => _values[this]!;
-  String get displayName => value.display;
-  String get description => value.description;
-  IconData get icon => iconsMap[value.icon]!;
-  String get shortenedDisplayName => value.display.split(" ").first;
 
   static MbParsedData getValue(MBTickerType tickerType, List<ChartData> data) {
     if (data.isEmpty) {

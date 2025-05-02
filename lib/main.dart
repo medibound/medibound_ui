@@ -372,7 +372,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   items: MBTimeWindow.values.map((window) {
                     return DropdownMenuItem<MBTimeWindow>(
                       value: window,
-                      child: Text(window.displayName),
+                      child: Text(window.value.display),
                     );
                   }).toList(),
                   onChanged: (value) {

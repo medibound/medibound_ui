@@ -66,7 +66,7 @@ class LabelModeGraph extends GraphWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          timeWindow.displayName + " ⋅ ",
+                          timeWindow.value.display + " ⋅ ",
                           style:
                               FlutterFlowTheme.of(context).labelSmall.copyWith(
                                     fontSize: 8,

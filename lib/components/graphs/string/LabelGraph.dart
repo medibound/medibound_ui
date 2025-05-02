@@ -15,7 +15,7 @@ class LabelGraph extends GraphWidget {
     required MBGraphSize graphSize,
     required double height,
     required DateTime referenceTime,
-  }) : super(
+  }) : super( 
           timeWindow: timeWindow,
           tickerType: tickerType,
           graphSize: graphSize,
@@ -70,7 +70,7 @@ class LabelGraph extends GraphWidget {
               
               children: [
                 Text(
-                  timeWindow.displayName + " ⋅ ",
+                  timeWindow.value.display + " ⋅ ",
                   style: FlutterFlowTheme.of(context).labelSmall.copyWith(
                         fontSize: 10,
                         height: 0.9,
