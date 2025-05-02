@@ -122,10 +122,9 @@ class ChartData {
 
 class PointData {
   PointData(
-      {required this.number, required this.timestamp, required this.label});
-  final double number;
+      {required this.data, required this.timestamp});
+  final dynamic data;
   final DateTime timestamp;
-  final String label;
 }
 
 class MbParsedData {

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:medibound_ui/components/utils/processed_number_data.dart';
 import 'package:medibound_ui/components/theme.dart';
@@ -45,9 +47,9 @@ class FullRadialGraph extends GraphWidget {
     }
 
     final double minBound =
-        (variable['range']?['lowerBound'] as num?)?.toDouble() ?? 0.0;
+        (variable['options']?['range']?['lower'] as num?)?.toDouble() ?? 0.0;
     final double maxBound =
-        (variable['range']?['upperBound'] as num?)?.toDouble() ?? 100.0;
+        (variable['options']?['range']?['upper'] as num?)?.toDouble() ?? 100.0;
     final String variableName = info?['display'] ?? "Unknown";
 
     final MbParsedData value =

@@ -63,11 +63,10 @@ ProcessedNumberData processNumberData(
     }
     
     return PointData(
-      number: numberValue.clamp(0, double.infinity),
+      data: numberValue.clamp(0, double.infinity),
       timestamp: data['timestamp'] is String
           ? DateTime.parse(data['timestamp'])
           : (data['timestamp'] is DateTime ? data['timestamp'] : now),
-      label: data['data'] ?? "",
     );
   }).toList();
 
@@ -76,7 +75,7 @@ ProcessedNumberData processNumberData(
 
   double minY = 0.0; // Default minimum value
   double maxY = parsedPoints.isNotEmpty
-      ? parsedPoints.map((p) => p.number).reduce((a, b) => a > b ? a : b)
+      ? parsedPoints.map((p) => p.data).reduce((a, b) => a > b ? a : b)
       : 0.0; // Default max if no points exist
 
   // Check if options.range exists and contains valid lower and upper values
@@ -217,7 +216,7 @@ ProcessedNumberData processNumberData(
   // ✅ If bucketing is disabled, return raw points but still maintain X-axis range
   return ProcessedNumberData(
     chartData: parsedPoints
-        .map((p) => ChartData(p.timestamp.toString(), p.number))
+        .map((p) => ChartData(p.timestamp.toString(), p.data))
         .toList(),
     parsedPoints: parsedPoints,
     minY: minY,

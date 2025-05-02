@@ -118,6 +118,12 @@ class _MyHomePageState extends State<MyHomePage> {
     "unit": "bpm",
     "type": "number",
     "is_list": true,
+    'options': {
+      'range': {
+        'lower': 0,
+        'upper': 100
+      }
+    },
     "data": List.generate(20, (index) {
       // Generate a realistic heart rate between 60-100 with some variation
       double value = 80 + (index % 5) * 3 - (index % 7) * 2;

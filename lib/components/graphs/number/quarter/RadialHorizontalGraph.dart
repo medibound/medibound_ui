@@ -46,9 +46,9 @@ class RadialHorizontalGraph extends GraphWidget {
     }
 
     final double minBound =
-        (variable['range']?['lowerBound'] as num?)?.toDouble() ?? 0.0;
+        (variable['options']?['range']?['lower'] as num?)?.toDouble() ?? 0.0;
     final double maxBound =
-        (variable['range']?['upperBound'] as num?)?.toDouble() ?? 100.0;
+        (variable['options']?['range']?['upper'] as num?)?.toDouble() ?? 100.0;
     final String variableName = info?['display'] ?? "Unknown";
 
     final MbParsedData value =

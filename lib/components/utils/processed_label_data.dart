@@ -19,11 +19,10 @@ ProcessedLabelData processLabelData(Map<String, dynamic> variable, MBTimeWindow 
   // Convert points to a list of parsed PointData
   final List<PointData> parsedPoints = points.map<PointData>((data) {
     return PointData(
-      number: (data['number']?.toDouble() ?? 0.0).clamp(0, double.infinity),
+      data: data['data'] ?? "",
       timestamp: data['timestamp'] is String
           ? DateTime.parse(data['timestamp'])
           : (data['timestamp'] is DateTime ? data['timestamp'] : now),
-      label: data['string'] ?? "",
     );
   }).toList();
 
@@ -73,7 +72,7 @@ ProcessedLabelData processLabelData(Map<String, dynamic> variable, MBTimeWindow 
   // Compute the frequency of labels in the filtered dataset
   final Map<String, int> frequencyMap = {};
   for (var point in filteredPoints) {
-    final labelString = point.label.toString();
+    final labelString = point.data.toString();
     frequencyMap[labelString] = (frequencyMap[labelString] ?? 0) + 1;
   }
 
@@ -82,7 +81,7 @@ ProcessedLabelData processLabelData(Map<String, dynamic> variable, MBTimeWindow 
       .reduce((a, b) => a.value > b.value ? a : b)
       .key;
       
-  String latestLabel = filteredPoints.last.label;
+  String latestLabel = filteredPoints.last.data;
 
   // Convert frequency data into ChartData format
   List<ChartData> chartData = frequencyMap.entries
