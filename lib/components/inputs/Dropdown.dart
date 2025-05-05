@@ -44,8 +44,15 @@ class _MBDropdownState extends State<MBDropdown> {
   void didUpdateWidget(MBDropdown oldWidget) {
     super.didUpdateWidget(oldWidget);
     
-    // Check if the items list changed
-    if (oldWidget.items != widget.items) {
+    // Check if the items list changed (length or content)
+    bool itemsChanged = oldWidget.items.length != widget.items.length;
+    
+    if (!itemsChanged && oldWidget.selectedItem != null) {
+      // If lengths match but selected item was removed, we still need to check
+      itemsChanged = !widget.items.any((item) => item.code == oldWidget.selectedItem!.code);
+    }
+    
+    if (itemsChanged) {
       _validateSelection();
     }
     
@@ -143,6 +150,9 @@ class _MBDropdownState extends State<MBDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    // Validate selection every time the widget builds
+    _validateSelection();
+    
     return Container(
       height: 40,
       decoration: BoxDecoration(

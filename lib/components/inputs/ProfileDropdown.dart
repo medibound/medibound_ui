@@ -45,8 +45,15 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
   void didUpdateWidget(MbProfileDropdown oldWidget) {
     super.didUpdateWidget(oldWidget);
     
-    // Check if the items list changed
-    if (oldWidget.items != widget.items) {
+    // Check if the items list changed (length or content)
+    bool itemsChanged = oldWidget.items.length != widget.items.length;
+    
+    if (!itemsChanged && oldWidget.selectedItem != null) {
+      // If lengths match but selected item was removed, we still need to check
+      itemsChanged = !widget.items.any((item) => item.uid == oldWidget.selectedItem!.uid);
+    }
+    
+    if (itemsChanged) {
       _validateSelection();
     }
     
@@ -120,6 +127,9 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    // Validate selection every time the widget builds
+    _validateSelection();
+    
     return Container(
       height: 40,
       decoration: BoxDecoration(

@@ -691,6 +691,198 @@ void loop() {
                   textAlign: TextAlign.center,
                 ),
               ),
+            
+            const SizedBox(height: 40),
+            
+            // Dropdown Validation Test Section
+            const Text('Dropdown Validation Test', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            const Text(
+              'Test removing items from dropdown lists to see validation behavior',
+              style: TextStyle(fontSize: 16),
+            ),
+            const SizedBox(height: 16),
+            
+            // MBDropdown Test
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Info Dropdown Test', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      MBDropdown(
+                        items: dropdownItems,
+                        selectedItem: selectedItem,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedItem = value;
+                            if (value != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Selected: ${value.display}'),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        hintText: "Select an organization",
+                      ),
+                      const SizedBox(height: 8),
+                      if (selectedItem != null)
+                        Text(
+                          'Selected: ${selectedItem!.display} (${selectedItem!.code})',
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            // Remove the selected item from the list if there is one
+                            if (selectedItem != null) {
+                              dropdownItems.removeWhere((item) => item.code == selectedItem!.code);
+                              // The selection should be automatically cleared by the widget
+                            }
+                          });
+                        },
+                        child: const Text('Remove Selected Item'),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            // Restore the original list
+                            dropdownItems.clear();
+                            dropdownItems.addAll([
+                              MBInfo(
+                                display: "Archimedic",
+                                description: "Manufacturer",
+                                code: "archimedic",
+                              ),
+                              MBInfo(
+                                display: "Venture Labs",
+                                description: "Research and Development",
+                                code: "venture_labs",
+                                color: Colors.blue,
+                                icon: "science",
+                              ),
+                              MBInfo(
+                                display: "Medibound",
+                                description: "Software Development",
+                                code: "medibound",
+                                color: Colors.teal,
+                                icon: "code",
+                              ),
+                              MBInfo(
+                                display: "BrickSimple",
+                                description: "Software Development",
+                                code: "bricksimple",
+                                color: Colors.red[900]!,
+                                icon: "architecture",
+                              ),
+                              MBInfo(
+                                display: "Penn Medicine",
+                                description: "Education",
+                                code: "penn_medicine",
+                                color: Colors.indigo[900]!,
+                                icon: "school",
+                              ),
+                            ]);
+                          });
+                        },
+                        child: const Text('Restore All Items'),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 24),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Profile Dropdown Test', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 8),
+                      MbProfileDropdown(
+                        items: profiles,
+                        selectedItem: selectedProfile,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedProfile = value;
+                            if (value != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Selected: ${value.display}'),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
+                            }
+                          });
+                        },
+                        hintText: "Select a profile",
+                        circle: true,
+                      ),
+                      const SizedBox(height: 8),
+                      if (selectedProfile != null)
+                        Text(
+                          'Selected: ${selectedProfile!.display} (${selectedProfile!.uid})',
+                          style: const TextStyle(fontWeight: FontWeight.w500),
+                        ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            // Remove the selected profile from the list if there is one
+                            if (selectedProfile != null) {
+                              profiles.removeWhere((profile) => profile.uid == selectedProfile!.uid);
+                              // The selection should be automatically cleared by the widget
+                            }
+                          });
+                        },
+                        child: const Text('Remove Selected Profile'),
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            // Restore the original list
+                            profiles.clear();
+                            profiles.addAll([
+                              MBProfile(
+                                display: "John Smith",
+                                description: "Lead Developer",
+                                photoUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgrPoFxnoMhPYStzoBvF2C51CrxYc2vo8-yg&s",
+                                uid: "user1",
+                              ),
+                              MBProfile(
+                                display: "Sarah Johnson",
+                                description: "Product Manager",
+                                photoUrl: "https://i.pravatar.cc/150?img=2",
+                                uid: "user2",
+                              ),
+                              MBProfile(
+                                display: "Michael Brown",
+                                description: "UX Designer",
+                                photoUrl: "https://i.pravatar.cc/150?img=3",
+                                uid: "user3",
+                              ),
+                              MBProfile(
+                                display: "Emily Davis",
+                                description: "Software Engineer",
+                                photoUrl: "https://i.pravatar.cc/150?img=4",
+                                uid: "user4",
+                              ),
+                            ]);
+                          });
+                        },
+                        child: const Text('Restore All Profiles'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
