@@ -28,13 +28,52 @@ class MbProfileDropdown extends StatefulWidget {
 }
 
 class _MbProfileDropdownState extends State<MbProfileDropdown> {
+  MBProfile? _currentSelectedItem;
+
   @override
   void initState() {
     super.initState();
-    if (widget.selectedItem != null) {
+    _validateSelection();
+    if (_currentSelectedItem != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onChanged(widget.selectedItem);
-    });
+        widget.onChanged(_currentSelectedItem);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(MbProfileDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Check if the items list changed
+    if (oldWidget.items != widget.items) {
+      _validateSelection();
+    }
+    
+    // Check if the selected item changed
+    if (oldWidget.selectedItem != widget.selectedItem) {
+      _currentSelectedItem = widget.selectedItem;
+      _validateSelection();
+    }
+  }
+
+  void _validateSelection() {
+    if (widget.selectedItem == null) {
+      _currentSelectedItem = null;
+      return;
+    }
+    
+    // Check if selected item exists in the items list
+    bool itemExists = widget.items.any((item) => item.uid == widget.selectedItem!.uid);
+    
+    if (!itemExists) {
+      // If selected item doesn't exist in the list, clear selection and notify
+      _currentSelectedItem = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onChanged(null);
+      });
+    } else {
+      _currentSelectedItem = widget.selectedItem;
     }
   }
 
@@ -89,7 +128,7 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
       ),
       child: DropdownSearch<MBProfile>(
         items: widget.items,
-        selectedItem: widget.selectedItem,
+        selectedItem: _currentSelectedItem,
         onChanged: widget.onChanged,
         enabled: widget.isEnabled,
         

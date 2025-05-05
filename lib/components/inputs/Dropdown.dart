@@ -27,13 +27,52 @@ class MBDropdown extends StatefulWidget {
 }
 
 class _MBDropdownState extends State<MBDropdown> {
+  MBInfo? _currentSelectedItem;
+
   @override
   void initState() {
     super.initState();
-    if (widget.selectedItem != null) {
+    _validateSelection();
+    if (_currentSelectedItem != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onChanged(widget.selectedItem);
-    });
+        widget.onChanged(_currentSelectedItem);
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(MBDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Check if the items list changed
+    if (oldWidget.items != widget.items) {
+      _validateSelection();
+    }
+    
+    // Check if the selected item changed
+    if (oldWidget.selectedItem != widget.selectedItem) {
+      _currentSelectedItem = widget.selectedItem;
+      _validateSelection();
+    }
+  }
+
+  void _validateSelection() {
+    if (widget.selectedItem == null) {
+      _currentSelectedItem = null;
+      return;
+    }
+    
+    // Check if selected item exists in the items list
+    bool itemExists = widget.items.any((item) => item.code == widget.selectedItem!.code);
+    
+    if (!itemExists) {
+      // If selected item doesn't exist in the list, clear selection and notify
+      _currentSelectedItem = null;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        widget.onChanged(null);
+      });
+    } else {
+      _currentSelectedItem = widget.selectedItem;
     }
   }
 
@@ -104,9 +143,6 @@ class _MBDropdownState extends State<MBDropdown> {
 
   @override
   Widget build(BuildContext context) {
-
-    
-
     return Container(
       height: 40,
       decoration: BoxDecoration(
@@ -115,7 +151,7 @@ class _MBDropdownState extends State<MBDropdown> {
       ),
       child: DropdownSearch<MBInfo>(
         items: widget.items,
-        selectedItem: widget.selectedItem,
+        selectedItem: _currentSelectedItem,
         onChanged: widget.onChanged,
         enabled: widget.isEnabled,
         filterFn: (item, filter) => 
