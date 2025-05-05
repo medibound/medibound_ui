@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:medibound_ui/components/inputs/Dropdown.dart';
 import 'package:medibound_ui/components/inputs/ProgressFlow.dart';
 import 'package:medibound_ui/components/theme.dart';
@@ -7,6 +8,8 @@ import 'components/utils/ComponentTypes.dart';
 import './components/widget_registry.dart';
 import './components/inputs/ProfileDropdown.dart';
 import './components/utils/Profile.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/github.dart';
 
 void main() {
   runApp(const MyApp());
@@ -574,6 +577,83 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+            const SizedBox(height: 40),
+
+            // Code Snippet Examples
+            const Text('Markdown Examples', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 16),
+            
+            // Single MarkdownSnippet that handles both code and markdown
+            HighlightView(
+              language: 'cpp',
+      // The original code to be highlighted
+      '''
+#include "../medibound-lib-esp32/src/MediboundDeviceBLE.h"
+
+using namespace Medibound;
+
+MediboundDeviceBLE* device = nullptr;
+
+float heartRateValue = 60.0f;
+float waterIntakeValue = 0.0f;
+unsigned long lastUpdate = 0;
+const unsigned long updateInterval = 1000; // 1 second
+
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) delay(10);
+
+  Serial.println("Initializing Medibound device...");
+
+  // Step 1: Instantiate your Medibound BLE device
+  device = new MediboundDeviceBLE(
+    "YOUR_API_KEY",        // Replace with your Medibound API Key
+    "YOUR_SECRET_KEY",     // Replace with your Secret Key
+    "YOUR_DEVICE_ID",      // Replace with your Device ID
+    "My Medibound Device", // Friendly name
+    DeviceMode::CONTINUOUS // Streaming mode
+  );
+
+  // Step 2: Define the data stream logic
+  device->onStart([]() {
+    unsigned long currentTime = millis();
+    if (currentTime - lastUpdate >= updateInterval) {
+      lastUpdate = currentTime;
+
+      heartRateValue += 1.5f;
+      waterIntakeValue += 0.25f;
+
+      Serial.printf("Sending heartRate: %.1f, waterIntake: %.2f\n", heartRateValue, waterIntakeValue);
+
+      std::vector<MediboundVariable> data;
+      data.push_back(MediboundVariable("heartRate", {heartRateValue}));
+      data.push_back(MediboundVariable("waterIntake", {waterIntakeValue}));
+
+      device->setData(data);
+    }
+  });
+
+  Serial.println("Device initialized");
+}
+
+void loop() {
+  delay(10); // Keep BLE stack responsive
+}
+''',
+
+      // Specify language
+      // It is recommended to give it a value for performance
+
+      // Specify highlight theme
+      // All available themes are listed in `themes` folder
+      theme: githubTheme,
+
+      // Specify padding
+      padding: EdgeInsets.all(12),
+
+      // Specify text style
+     
+    ),
             const SizedBox(height: 40),
 
             const Text('Standard Components', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),

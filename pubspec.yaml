@@ -18,6 +18,9 @@ dependencies:
   syncfusion_flutter_gauges: ^28.2.12
   dropdown_search: ^5.0.6
   url_launcher: 6.3.0
+  flutter_markdown: ^0.6.18
+  flutter_highlight: ^0.7.0
+  markdown_widget: ^2.3.2+7
 
 dev_dependencies:
   flutter_test:
