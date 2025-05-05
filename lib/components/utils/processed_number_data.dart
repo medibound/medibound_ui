@@ -73,29 +73,33 @@ ProcessedNumberData processNumberData(
   parsedPoints
       .sort((a, b) => b.timestamp.compareTo(a.timestamp)); // Sort ascending
 
-  double minY = 0.0; // Default minimum value
-  double maxY = parsedPoints.isNotEmpty
-      ? parsedPoints.map((p) => p.data).reduce((a, b) => a > b ? a : b)
-      : 0.0; // Default max if no points exist
+  double minY = 0.0;  // Default minimum
+  double maxY = 100.0;  // Default maximum
+  
+  try {
+    if (variable["options"] != null && 
+        variable["options"]["range"] != null &&
+        variable["options"]["range"]["lower"] != null &&
+        variable["options"]["range"]["upper"] != null) {
+      double tempMin = variable["options"]["range"]["lower"].toDouble();
+      double tempMax = variable["options"]["range"]["upper"].toDouble();
 
-  // Check if options.range exists and contains valid lower and upper values
-  if (variable["options"] != null && 
-      variable["options"]["range"] != null &&
-      variable["options"]["range"]["lower"] != null &&
-      variable["options"]["range"]["upper"] != null) {
-    double tempMin = variable["options"]["range"]["lower"].toDouble();
-    double tempMax = variable["options"]["range"]["upper"].toDouble();
-
-    // Ensure valid range
-    if (tempMin < tempMax) {
-      minY = tempMin;
-      maxY = tempMax;
+      // Ensure valid range
+      if (tempMin < tempMax) {
+        minY = tempMin;
+        maxY = tempMax;
+      }
     }
+  } catch (e) {
+    // If any exception occurs, use the default range
+    minY = 0.0;
+    maxY = 100.0;
   }
 
   // Final check: if `minY` is not less than `maxY`, reset `minY` to 0
   if (minY >= maxY) {
     minY = 0.0;
+    maxY = 100.0;
   }
 
   // ✅ Determine min and max timestamps for the selected timeWindow
