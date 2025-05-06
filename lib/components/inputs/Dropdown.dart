@@ -197,6 +197,7 @@ class _MBDropdownState extends State<MBDropdown> {
                 duration: const Duration(milliseconds: 200),
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).secondaryBackground,
+                  border: Border.all(color: FlutterFlowTheme.of(context).alternate, width: 1),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
