@@ -112,12 +112,12 @@ class _MbProfileDropdownState extends State<MbProfileDropdown> {
                 profile.display,
                 style: FlutterFlowTheme.of(context).bodyMedium.copyWith(height: 1.1, fontWeight: FontWeight.w600),
               ),
-              Text(
+              /*Text(
                 profile.description,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: FlutterFlowTheme.of(context).labelSmall.copyWith(height: 1),
-              ),
+              ),*/
             ],
           ),
         ),
