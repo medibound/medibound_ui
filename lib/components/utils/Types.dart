@@ -226,3 +226,41 @@ List<MBInfo> mBRegistrationStatus = [
     icon: "warning",
   ),
 ];
+
+List<MBInfo> mBMaterialOrderStatus = [
+  MBInfo(
+    display: "Ordered",
+    description: "Part has been ordered but not yet received",
+    code: "ordered",
+    color: getMBColorByName("Slate"),
+    icon: "shopping_cart",
+  ),
+  MBInfo(
+    display: "In Transit",
+    description: "Part is currently being shipped",
+    code: "in_transit",
+    color: getMBColorByName("Munsell"),
+    icon: "local_shipping",
+  ),
+  MBInfo(
+    display: "Received",
+    description: "Part has been received and is in inventory",
+    code: "received",
+    color: getMBColorByName("Health"),
+    icon: "inventory",
+  ),
+  MBInfo(
+    display: "Out of Stock",
+    description: "Part is currently unavailable",
+    code: "out_of_stock",
+    color: getMBColorByName("Crayola"),
+    icon: "error_outline",
+  ),
+  MBInfo(
+    display: "Backordered",
+    description: "Part is on backorder",
+    code: "backordered",
+    color: getMBColorByName("Amber"),
+    icon: "pending",
+  ),
+];
