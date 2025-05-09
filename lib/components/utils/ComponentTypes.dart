@@ -278,10 +278,10 @@ extension MBTickerTypeExtension on MBTickerType {
     double value;
     switch (tickerType) {
       case MBTickerType.last:
-        value = data.last.y;
+        value = data.first.y;
         break;
       case MBTickerType.first:
-        value = data.first.y;
+        value = data.last.y;
         break;
       case MBTickerType.mean:
         value = data.map((e) => e.y).reduce((a, b) => a + b) / data.length;
